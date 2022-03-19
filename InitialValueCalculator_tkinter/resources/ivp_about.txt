@@ -1,0 +1,14 @@
+
+
+The Initial Value Calculator, using Euler's Method, was created as a class project for MATH 547: Mathematical Modeling, in Spring of 2022 by Christopher S. Francis.
+
+
+Use the controls on the graphical user interface (GUI) to input the parameters for the given differential and receive a plotted solution. 
+
+
+Solutions can be saved to a filetype unique to this software to reopen.
+
+
+Solutions can be printed as LaTeX to a text file, unfortunately due to time constraints the LaTeX will have to be manually copied and pasted into an editor (at the time of development I was primarily using "EquationEditor++" or "Auto-Latex" plugins for Google Docs, so that is all they've been tested on)
+
+
