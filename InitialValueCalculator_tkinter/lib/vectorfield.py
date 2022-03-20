@@ -40,6 +40,7 @@ class VectorField(tk.Canvas):
 
     def plot(self, a=1, b=1):
         ## max value needs to be forty-five percent of plot area
+        ## each plot draws an error of length deltaT
         i = a*self.wide + self.wide
         previous = i-1
         while i < b*self.wide+self.wide:

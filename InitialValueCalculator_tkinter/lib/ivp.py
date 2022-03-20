@@ -18,8 +18,30 @@ class IVP():
         
         
         
+    def setFunction(self, function):
+        if "," in function:
+            self.function = function.split(",")
+            print(self.function)
+            for i in range(len(self.function)):
+                self.function[i] = float(self.function[i].strip())
+            print(self.function)
+            self.solve(self.function)
+            
+        else:
+            self.function = function
+            print(self.function)
+            for t in range(10):
+                self.solve(t)
+            
+        
     def solve(self, t):
-        print(eval(self.function))
+        if isinstance(self.function, list):
+            for t in range(len(self.function)):
+                print(self.function[t])
+        else:
+            print(eval(self.function))
+        
+        
         
     def __str__(self):
         bigCurly = "\\Bigg\\{"

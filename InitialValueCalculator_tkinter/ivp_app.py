@@ -66,13 +66,18 @@ def ShowAbout(event):
 ##end ShowAbout()
 
 
-def InputFunction(event, text):
-    text["fg"] = "#212121"
-    text.delete(0, tk.END)
-    text.focus_set()
-##end InputFunction()
+
+def TestArrow(event):
+    pltVectorField.create_arrow(20, 20, 45, 45)
+    pltVectorField.create_arrow(45, 45, 103, 90)
+    pltVectorField.create_arrow(103, 90, 178, 15)
+    pltVectorField.create_arrow(178, 15, 245, 7)
+##end TestArrow()
 
 
+def TestFunction(event):
+    currentIVP.setFunction(txtUFunction.get())
+##end TestFunction()
 
 
 
@@ -117,7 +122,8 @@ mnMain.add_cascade(label="Help", menu=mnHelp)
 
         ###########################  TOOLBAR  ###############################
 frmToolbar = tk.Frame(gui, bd=3, relief=tk.RAISED)
-btnPlaceholder = tk.Button(frmToolbar, text="placeholder")
+btnPlaceholder = tk.Button(frmToolbar, text="test vector", command=lambda: TestArrow(None))
+btnTemporary = tk.Button(frmToolbar, text="test u", command=lambda: TestFunction(None))
 
 
         ###########################  PRIMARY I/O  ############################
@@ -127,32 +133,29 @@ ioPlot = tk.Frame(ioPrimary, bd=3, relief=tk.GROOVE)
 ioPrimary.add(ioControls)
 ioPrimary.add(ioPlot)
 
-lblFunctionInstructions = tk.Label(ioControls, text="Input the Time Dependent Function:\n(in Python syntax)")
+lblFunctionInstructions = tk.Label(ioControls, text="Input the Time Dependent Function:\n(in Python syntax using t as the variable, or a comma separated list for a set)\nEX: 3*math.sqrt(2*t - t // 3) OR 4, 7, 18, 31, ...")
 lblUFunction = tk.Label(ioControls, text="u(t)=")
-txtUFunction = tk.Entry(ioControls, fg="#c1c1c1")
-txtUFunction.insert(0, "math.sqrt(t**3)")
-txtUFunction.bind("<Button-1>", lambda event: InputFunction(event, txtUFunction))
-txtVFunction = tk.Entry(ioControls, fg="#c1c1c1")
+txtUFunction = tk.Entry(ioControls)
+txtVFunction = tk.Entry(ioControls)
 lblVFunction = tk.Label(ioControls, text="v(t)=")
-txtVFunction.insert(0, "math.sqrt(t**3)")
-txtVFunction.bind("<Button-1>", lambda event: InputFunction(event,txtVFunction))
 
-lblInitialInstructions = tk.Label(ioControls, text="Input the inital values:")
+
+lblInitialInstructions = tk.Label(ioControls, text="Input the inital values:\n(as a number)")
 lblInitial = tk.Label(ioControls, text="Input the Initial Values:")
 lblUInitial = tk.Label(ioControls, text="u(0)=")
 lblVInitial = tk.Label(ioControls, text="v(0)=")
-txtUInitial = tk.Entry(ioControls,fg="#c1c1c1")
-txtUInitial.insert(0, "16")
-txtUInitial.bind("<Button-1>", lambda event: InputFunction(event, txtUInitial))
-txtVInitial = tk.Entry(ioControls,fg="#c1c1c1")
-txtVInitial.insert(0, "16")
-txtVInitial.bind("<Button-1>", lambda event: InputFunction(event, txtVInitial))
+txtUInitial = tk.Entry(ioControls)
+txtVInitial = tk.Entry(ioControls)
 
-lblDeltaTInstructions = tk.Label(ioControls, text="Input the Time Interval:")
+
+lblDeltaTInstructions = tk.Label(ioControls, text="Input the Time Interval:\n(as a number)")
 lblDeltaT = tk.Label(ioControls, text="\u0394t=")
-txtDeltaT = tk.Entry(ioControls,fg="#c1c1c1")
-txtDeltaT.insert(0, "1")
-txtDeltaT.bind("<Button-1>", lambda event: InputFunction(event, txtDeltaT))
+txtDeltaT = tk.Entry(ioControls)
+
+lblDifferentialInstructions = tk.Label(ioControls, text="Input the Time Dependent Differential Function:\n(in python syntax, use \"u\" and \"v\" for the above functions)\nEX: t*v*math.cos(u**3)*(3*u**2)")
+lblDifferential = tk.Label(ioControls, text = "u'(t)=F(t, u(t))=")
+txtDifferential = tk.Entry(ioControls)
+
 
 squareSize = 300
 pltVectorField = vf.VectorField(ioPlot, width=squareSize, height=squareSize, deltaX = 0.1)
@@ -176,22 +179,27 @@ frmStatus.pack(fill="both")
 
 
 btnPlaceholder.grid(row=0, column=0, padx=5, pady=10)
+btnTemporary.grid(row=0, column=1, padx=5, pady=10)
 
-lblFunctionInstructions.grid(row=0, column=0, columnspan=4, pady=12)
+lblFunctionInstructions.grid(row=0, column=0, columnspan=4, pady=7)
 lblUFunction.grid(row=1, column=0)
 txtUFunction.grid(row=1, column=1)
 lblVFunction.grid(row=1, column=2)
 txtVFunction.grid(row=1, column=3)
 
-lblInitialInstructions.grid(row=2, column=0, columnspan=4, pady=12)
+lblInitialInstructions.grid(row=2, column=0, columnspan=4, pady=7)
 lblUInitial.grid(row=3, column=0)
 txtUInitial.grid(row=3, column=1)
 lblVInitial.grid(row=3, column=2)
 txtVInitial.grid(row=3, column=3)
 
-lblDeltaTInstructions.grid(row=4, column=0, columnspan=4, pady=12)
+lblDeltaTInstructions.grid(row=4, column=0, columnspan=4, pady=7)
 lblDeltaT.grid(row=5, column=0)
 txtDeltaT.grid(row=5, column=1)
+
+lblDifferentialInstructions.grid(row=6, column=0, columnspan=4, pady=7)
+lblDifferential.grid(row=7, column=0)
+txtDifferential.grid(row=7, column=1)
 
 pltVectorField.grid(row=0, column=1, padx=10, pady=10)
 

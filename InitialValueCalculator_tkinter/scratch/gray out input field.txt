@@ -1,0 +1,44 @@
+
+
+def InputFunction(event, text):
+    text["fg"] = "#212121"
+    text.delete(0, tk.END)
+    text.focus_set()
+##end InputFunction()
+
+
+
+
+        ###########################  PRIMARY I/O  ############################
+ioPrimary = tk.PanedWindow(gui, orient=tk.HORIZONTAL, sashrelief=tk.RAISED)
+ioControls = tk.Frame(ioPrimary, bd=3, relief=tk.GROOVE)
+ioPlot = tk.Frame(ioPrimary, bd=3, relief=tk.GROOVE)
+ioPrimary.add(ioControls)
+ioPrimary.add(ioPlot)
+
+lblFunctionInstructions = tk.Label(ioControls, text="Input the Time Dependent Function:\n(in Python syntax)")
+lblUFunction = tk.Label(ioControls, text="u(t)=")
+txtUFunction = tk.Entry(ioControls, fg="#c1c1c1")
+txtUFunction.insert(0, "math.sqrt(t**3)")
+txtUFunction.bind("<Button-1>", lambda event: InputFunction(event, txtUFunction))
+txtVFunction = tk.Entry(ioControls, fg="#c1c1c1")
+lblVFunction = tk.Label(ioControls, text="v(t)=")
+txtVFunction.insert(0, "math.sqrt(t**3)")
+txtVFunction.bind("<Button-1>", lambda event: InputFunction(event,txtVFunction))
+
+lblInitialInstructions = tk.Label(ioControls, text="Input the inital values:")
+lblInitial = tk.Label(ioControls, text="Input the Initial Values:")
+lblUInitial = tk.Label(ioControls, text="u(0)=")
+lblVInitial = tk.Label(ioControls, text="v(0)=")
+txtUInitial = tk.Entry(ioControls,fg="#c1c1c1")
+txtUInitial.insert(0, "16")
+txtUInitial.bind("<Button-1>", lambda event: InputFunction(event, txtUInitial))
+txtVInitial = tk.Entry(ioControls,fg="#c1c1c1")
+txtVInitial.insert(0, "16")
+txtVInitial.bind("<Button-1>", lambda event: InputFunction(event, txtVInitial))
+
+lblDeltaTInstructions = tk.Label(ioControls, text="Input the Time Interval:")
+lblDeltaT = tk.Label(ioControls, text="\u0394t=")
+txtDeltaT = tk.Entry(ioControls,fg="#c1c1c1")
+txtDeltaT.insert(0, "1")
+txtDeltaT.bind("<Button-1>", lambda event: InputFunction(event, txtDeltaT))
