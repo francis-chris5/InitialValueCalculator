@@ -26,22 +26,20 @@ class VectorField(tk.Canvas):
         
         
     def showAxis(self):
-        
-        
             ## horizontal axis
-        self.create_line(0, float(self["height"]) - 2* self.tall, (self.ticks-1)*self.wide, float(self["height"]) - 2* self.tall, fill="blue", width=2) 
-        for i in range(self.wide, (self.ticks-1) * self.wide, self.tall):
-            self.create_line(i, float(self["height"]) - 2* self.tall - 5, i, float(self["height"]) - 2* self.tall + 5, fill="blue", width = 2)
+        self.create_line(0, float(self["height"])/2, float(self["width"]), float(self["height"])/2, fill="blue", width=2) 
+        # for i in range(self.wide, (self.ticks-1) * self.wide, self.tall):
+        #     self.create_line(i, float(self["height"])/2 - 5, i, float(self["height"])/2 + 5, fill="blue", width = 2)
             
             ## vertical axis
-        self.create_line(self.wide, 0, self.wide, (self.ticks-1)*self.tall, fill="blue", width=2)
-        for i in range(0, int(float(self["height"]) - 3* self.tall), self.tall):
-            self.create_line(self.wide-5, i, self.wide+5, i, fill="blue", width = 2)
+        self.create_line(float(self["width"])/2, 0, float(self["width"])/2, float(self["height"]), fill="blue", width=2)
+        # for i in range(0, int(float(self["height"]) - 3* self.tall), self.tall):
+        #     self.create_line(self.wide-5, i, self.wide+5, i, fill="blue", width = 2)
         
         
 
     def plot(self, a=1, b=1):
-        
+        ## max value needs to be forty-five percent of plot area
         i = a*self.wide + self.wide
         previous = i-1
         while i < b*self.wide+self.wide:

@@ -3,15 +3,6 @@
 Initial Value Problem Calculator, Using Euler Method
 
 
-General Help
---enter the values...get the solution...
-
-
-
-
-
-Specific Help
-
 New Solution
         The application will open to a blank solution by default
         To close the current solution and create a new one choose File -> New Solution from the main menu, or press [Ctrl + Shift + N] on the keyboard
@@ -19,5 +10,18 @@ New Solution
         
 Print Solution
         To typeset the Initial Value Problem and Solution choose File -> Print Solutin from the main menu, or press [Ctrl + Shift + P] on the keyboard
+        
+        
+
+Input an Intial Value Problem
+        Enter the functions for u(t) --the x axis-- and v(t) --the y axis-- in the appropriate input box,
+        If only one function is needed use u(t) and leave v(t) blank
+        Enter the function in Python syntax with t as a variable, the standard Python math library is available
+        
+        Enter the intial values, if only one intial value is needed use u(0) and leave v(0) blank
+        
+        Enter the desired length of time intervals to calculate the solutions on
+        
+        
         
         

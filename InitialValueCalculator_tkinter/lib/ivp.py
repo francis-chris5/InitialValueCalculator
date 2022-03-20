@@ -7,6 +7,7 @@ Created on Sat Mar 19 10:41:04 2022
 @version: Python 3.10.2
 """
 
+import math
 
 
 class IVP():
@@ -17,7 +18,8 @@ class IVP():
         
         
         
-        
+    def solve(self, t):
+        print(eval(self.function))
         
     def __str__(self):
         bigCurly = "\\Bigg\\{"
