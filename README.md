@@ -11,7 +11,7 @@ A project in a Mathematical Modeling class, number MATH 537 at Indiana State Uni
   <li>arrows can be drawn on the vector field correctly</li>
 </ul>
 
-<p>Here's a picture... NOTE: the output from the input function strings in the console, these are test arrows, completely unrelated to the function that was input</p>
+<p>Here's a picture... NOTE: the output from the input function strings in the console in the background, the arrows on the vector field are test arrows only and are completely unrelated to the function that was input</p>
 
 <img src="https://user-images.githubusercontent.com/50467171/159381755-943230be-6a21-4fb4-8df4-3c040b8ac08a.png"/>
 
