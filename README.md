@@ -12,7 +12,7 @@ A project in a Mathematical Modeling class, number MATH 537 at Indiana State Uni
 </ul>
 
 <p>Here's a picture... NOTE: the output from the input function strings in the console, these are test arrows, completely unrelated to the function that was input</p>
-![phase_1_pic](https://user-images.githubusercontent.com/50467171/159381755-943230be-6a21-4fb4-8df4-3c040b8ac08a.png)
+
 <img src="https://user-images.githubusercontent.com/50467171/159381755-943230be-6a21-4fb4-8df4-3c040b8ac08a.png"/>
 
 <h3>Ready to start phase 2</h3>
