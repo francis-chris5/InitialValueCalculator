@@ -17,12 +17,19 @@ A project in a Mathematical Modeling class, number MATH 537 at Indiana State Uni
 <img src="https://user-images.githubusercontent.com/50467171/159381755-943230be-6a21-4fb4-8df4-3c040b8ac08a.png"/>
 <img src="https://user-images.githubusercontent.com/50467171/159385072-f7190283-adb8-4881-a603-abb8ca81bff3.png"/>
 
-<h3>Ready to start phase 2</h3>
+<br>
+<br>
+
+<h3>Phase 2 Complete</h3>
 <ul>  
-  <li>split the pieces of the functions up into a list and integrate each one</li>
-  <li>use the initial value to calculate any necessary constants</li>
-  <li>display the original functions u(t) and v(t) on the interface</li>
+  <li>split the pieces of the functions up into a list and use euler's method to approximate next value</li>
+  <li>compare to the original functions u(t) and v(t) on the interface</li>
+  <li>get the save and open functions working so I can stop typing a lorenz attractor every test run</li>
 </ul>
+
+<p>Here's a picture... NOTE: the output in the console in the background shows the IVP does not align with the original function, no need to graph until they seem close</p>
+
+<img src="https://user-images.githubusercontent.com/50467171/159564987-a7d20cf6-3e1f-4149-bc8d-8e83b98a4d29.png"/>
 
 
 <h3>in the future phase 3</h3>
