@@ -13,9 +13,9 @@ A project in a Mathematical Modeling class, number MATH 537 at Indiana State Uni
   <li>plotter displays vector based off the input global coordinates --need to set up scale based off solutions</li>
 </ul>
 
-<p>Here's a picture of the progress so far... I don't know why the y component on the vectors is blowing up right nowNOTE: the arrows on the vector field are test arrows only and are completely unrelated to the function that was input</p>
+<p>Here's a picture of the progress so far... I don't know why the y component on the vectors is blowing up right now... NOTE: the arrows and function on the vector field are test cases only and are completely unrelated to the IVP (test was: 2*x**3 - 8*x**2 + 7)</p>
 
-<img src="https://user-images.githubusercontent.com/50467171/160249969-10e57822-3e3a-4a92-971e-f2920cf61136.png"/>
+<img src="https://user-images.githubusercontent.com/50467171/160255630-b5901f19-7970-4de9-b075-18dd932bd96c.png"/>
 
 <br>
 <br>
