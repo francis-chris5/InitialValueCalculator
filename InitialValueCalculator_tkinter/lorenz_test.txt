@@ -1,0 +1,6 @@
+u / (2 * (t + 1)) -2*t*v & v / (2 * (t + 1)) - 2 * t * u
+
+math.sqrt(t+1)*math.cos(t**2)
+
+
+math.sqrt(t+1)*math.sin(t**2)

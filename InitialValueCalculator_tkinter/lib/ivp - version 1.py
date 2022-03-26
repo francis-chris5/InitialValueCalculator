@@ -18,15 +18,11 @@ class Exact():
     def setDeltaT(self, deltaT):
         self.deltaT = float(deltaT)
         
-    def setSteps(self, steps):
-        self.steps = float(steps)
+    def setTargetT(self, targetT):
+        self.targetT = float(targetT)
         
     def setInitialValue(self, initial):
-        if "&" in initial:
-            initial = initial.split("&")
-            self.solutions = [[float(initial[0]),float(initial[1])]]
-        else:
-            self.solutions =[float(initial)]
+        self.solutions =[float(initial)]
         
     
     
@@ -35,73 +31,71 @@ class Exact():
             self.function = function.split(",")
             for i in range(len(self.function)):
                 self.function[i] = float(self.function[i].strip())
+            print(self.function)
             self.solve(self.function)
-        elif "&" in function:
-            self.function = function.split("&")
-            currentStep = 1
-            while currentStep < self.steps:
-                t = currentStep * self.deltaT
-                uv = [eval(self.function[0]), eval(self.function[1])]
-                self.solutions.append(uv)
-                currentStep += 1
         else:
             self.function = function
+            print(self.function)
             currentStep = 1
-            while currentStep < self.steps:
+            while currentStep < self.targetT:
                 t = currentStep * self.deltaT
                 self.solutions.append(eval(self.function))
                 currentStep += 1
+            print(self.solutions)
                 
                 
                 
     def __str__(self):
-        return str(self.function)
+        bigCurly = "\\Bigg\\{"
+        block = "\\begin{align*} u'(t) = " + str(self.function) + " \\\\ u(" + str(self.time) + ") \\\\ " + "\\end{align*}"
+        result = bigCurly + " " + block
+        return result
     
 
 class EulerMethod():
-    def __init__(self, differential=1, deltaT=0.1, steps=1, functionU=[]):
+    def __init__(self, differential=1, deltaT=0.1, targetT=1, functionU=[1], functionV=[1]):
         self.differential = differential
         self.deltaT = deltaT
-        self.steps = steps
+        self.targetT = targetT
         self.functionU = functionU
-        # self.functionV = functionV
+        self.functionV = functionV
         
         
     def setDeltaT(self, deltaT):
         self.deltaT = float(deltaT)
         
-    def setSteps(self, steps):
-        self.steps = float(steps)
+    def setTargetT(self, targetT):
+        self.targetT = float(targetT)
         
     def setInitialU(self, u0):
-        if "&" in u0:
-            u0 = u0.split("&")
-            self.functionU.append([float(u0[0]), float(u0[1])])
-        else:
-            self.functionU.append(float(u0))
+        self.functionU[0] = float(u0)
         
+    def setInitialV(self, v0):
+        self.functionV[0] = float(v0)
 
     def solve(self, differential):
         if "&" in differential:
             self.differential = differential.split("&")
             currentStep = 1
-            t = 0
-            while currentStep <= self.steps:
-                u = self.functionU[currentStep-1][0]
-                v = self.functionU[currentStep-1][1]
-                t += self.deltaT
-                self.functionU.append([self.functionU[currentStep-1][0] + eval(self.differential[0]), v + self.functionU[currentStep-1][1] + eval(self.differential[1])])
+            while currentStep < self.targetT:
+                u = self.functionU[currentStep-1]
+                v = self.functionV[currentStep-1]
+                t = currentStep * self.deltaT
+                self.functionU.append(eval(self.differential[0]))
+                self.functionV.append(eval(self.differential[1]))
                 currentStep += 1
         else:
             self.differential = differential 
             currentStep = 1
-            t = 0
-            while currentStep <= self.steps:
+            while currentStep < self.targetT:
                 u = self.functionU[currentStep-1]
-                t += self.deltaT
-                self.functionU.append(self.functionU[currentStep-1] + eval(self.differential))
+                t = currentStep * self.deltaT
+                self.functionU.append(eval(self.differential))
                 currentStep += 1
-
+        print(self.differential)
+        print(self.targetT)
+        print(self.functionU)
+        print(self.functionV)
             
         
     def evaluate(self, t):
@@ -114,38 +108,9 @@ class EulerMethod():
         
         
     def __str__(self):
-        return str(self.differential)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-###########################  WHITE SPACE FOR SCROLLING  ##########################        
+        bigCurly = "\\Bigg\\{"
+        block = "\\begin{align*} u'(t) = " + str(self.function) + " \\\\ u(" + str(self.time) + ") \\\\ " + "\\end{align*}"
+        result = bigCurly + " " + block
+        return result
+        
         

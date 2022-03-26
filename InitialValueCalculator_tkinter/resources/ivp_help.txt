@@ -7,11 +7,15 @@ New Solution
         The application will open to a blank solution by default
         To close the current solution and create a new one choose File -> New Solution from the main menu, or press [Ctrl + Shift + N] on the keyboard
         
+Save Solution
+        After filling out all input fields you may save the Initial Value problem to a ".ivp" file, simply select File -> Save Solution from the main menu or press [Ctrl + s] on the keyboard
         
-Print Solution
-        To typeset the Initial Value Problem and Solution choose File -> Print Solutin from the main menu, or press [Ctrl + Shift + P] on the keyboard
         
+Open Solution
+        If there is a saved ".ivp" file select File -> Open Solution from the main menu, or press [Ctrl + Shift + O] on the keyboard to browse to the file's location and open it
+        The application includes a saved version of a Lorenz Attractor for an example on how to input the IVP.
         
+
 
 Input an Intial Value Problem
         Enter the functions for u(t) --the x axis-- and v(t) --the y axis-- in the appropriate input box,
@@ -24,5 +28,5 @@ Input an Intial Value Problem
         
         Input continuous funtions in python syntax and input discrete time functions as a comma separated list of values
         
-        
+        Input the differential function using "u", "v", and "t" as the variables, and use an ampersand (&) to separate functions for a piecewise function, the differential cannot be a discrete set of values
         

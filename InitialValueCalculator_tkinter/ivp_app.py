@@ -4,80 +4,182 @@ Created on Sat Mar 19 09:36:14 2022
 
 @author: Christopher S. Francis
 
-@version: Python 3.10.2
+@language: Python 3.10.2
+
+@summary: This file is the Graphcial User Interface (GUI) for an Initial Value Problem calculator using Euler's Method to solve
 """
 
 import tkinter as tk
 import tkinter.filedialog
 import lib.ivp as ivp
 import lib.vectorfield as vf
+import lib.infodialog as info
 
 
-currentIVP = ivp.IVP(time=0, function="math.sqrt(t**3)")
-currentIVP.solve(16)
+# u = ivp.Exact()
+# diff = ivp.EulerMethod()
 
 #######################################  Functions  ##########################
 
 def NewSolution(event):
-    print("new solution coming soon")
+    txtDifferential.delete(0, tk.END)
+    txtUInitial.delete(0, tk.END)
+    txtDeltaT.delete(0, tk.END)
+    txtNumberOfSteps.delete(0, tk.END)
+    txtUFunction.delete(0, tk.END)
+    txtDifferential.focus_set()
+    UpdateLeftStatus("Status: New IVP...")
+    UpdateMidStatus("")
+    UpdateRightStatus("")
 ##end NewSolution()
 
 
 def OpenSolution(event):
-    print("open solution coming soon")
+    inputs = []
+    filepath = tk.filedialog.askopenfilename(defaultextension=".ivp", filetypes=(("IVP calculator", "*.ivp"),("All Files", "*.*") ))
+    with open(filepath, "r") as fromFile:
+        for line in fromFile:
+            inputs.append(line.strip())
+    txtDifferential.delete(0, tk.END)
+    txtUInitial.delete(0, tk.END)
+    txtDeltaT.delete(0, tk.END)
+    txtNumberOfSteps.delete(0, tk.END)
+    txtUFunction.delete(0, tk.END)
+    
+    txtDifferential.insert(0,inputs[0])
+    txtUInitial.insert(0,inputs[1])
+    txtDeltaT.insert(0,inputs[2])
+    txtNumberOfSteps.insert(0,inputs[3])
+    txtUFunction.insert(0,inputs[4])
+    UpdateLeftStatus("Status: Opened " + filepath)
+    UpdateMidStatus("")
+    UpdateRightStatus("")
 ##end OpenSolution()
 
 
 def SaveSolution(event):
-    print("save solution coming soon")
+    inputs = [txtDifferential.get(), 
+              txtUInitial.get(),
+              txtDeltaT.get(), 
+              txtNumberOfSteps.get(),
+              txtUFunction.get()]
+    filepath = tk.filedialog.asksaveasfilename(defaultextension=".ivp", filetypes=(("IVP calculator", "*.ivp"),("All Files", "*.*") ))
+    with open(filepath, "w") as toFile:
+        for i in inputs:
+            toFile.write(i + "\n")
+    UpdateLeftStatus("Status: Saved " + filepath)
+    UpdateMidStatus("")
+    UpdateRightStatus("")
 ##end SaveSolution
 
 
-def PrintSolution(event):
-    filepath = tk.filedialog.asksaveasfilename(defaultextension=".txt", filetypes=(("text file", "*.txt"),("All Files", "*.*") ))
-    with open(filepath, "w") as toFile:
-        toFile.write(str(currentIVP))
-##end PrintSolution()
+# def PrintSolution(event):
+#     filepath = tk.filedialog.asksaveasfilename(defaultextension=".txt", filetypes=(("text file", "*.txt"),("All Files", "*.*") ))
+#     with open(filepath, "w") as toFile:
+#         toFile.write(str(u))
+# ##end PrintSolution()
 
 
 def ShowHelp(event):
     dlgHelp = tk.Toplevel(gui)
-    #dlgHelp.geometry("432x345")
+    dlgHelp.geometry("432x345")
     dlgHelp.title("Initial Value Calculator Help")
     helpString = ""
     with open("resources/ivp_help.txt", "r") as fromFile:
         for line in fromFile:
             helpString = fromFile.read()
-    lblHelp = tk.Label(dlgHelp, text=helpString, wraplength=500, justify=tk.LEFT)
-    lblHelp.pack(side="left", padx=10, pady=10)
+    infoHelp = info.InfoDialog(dlgHelp, info=helpString)
+    infoHelp.pack(fill="both", expand=True)
 ##end ShowHelp()
 
 
 def ShowAbout(event):
     dlgAbout = tk.Toplevel(gui)
-    #dlgAbout.geometry("432x345")
+    dlgAbout.geometry("432x345")
     dlgAbout.title("About Initial Value Calculator")
     aboutString = ""
     with open("resources/ivp_about.txt", "r") as fromFile:
         for line in fromFile:
             aboutString = fromFile.read()
-    lblAbout = tk.Label(dlgAbout, text=aboutString, wraplength=400, justify=tk.LEFT)
-    lblAbout.pack(side="left", padx=10, pady=10)
+    infoAbout = info.InfoDialog(dlgAbout, info=aboutString)
+    infoAbout.pack(fill="both", expand=True)
 ##end ShowAbout()
+
+
+def UpdateLeftStatus(leftStatus):
+    lblLeftStatus["text"] = leftStatus
+##end UpdateStatusLeft()
+
+def UpdateMidStatus(midStatus):
+    lblMidStatus["text"] = midStatus
+##end UpdateStatusLeft()
+
+def UpdateRightStatus(rightStatus):
+    lblRightStatus["text"] = rightStatus
+##end UpdateStatusLeft()
 
 
 
 def TestArrow(event):
-    pltVectorField.create_arrow(20, 20, 45, 45)
-    pltVectorField.create_arrow(45, 45, 103, 90)
-    pltVectorField.create_arrow(103, 90, 178, 15)
-    pltVectorField.create_arrow(178, 15, 245, 7)
+    # pltVectorField.create_arrow(20, 20, 45, 45)
+    # pltVectorField.create_arrow(45, 45, 103, 90)
+    # pltVectorField.create_arrow(103, 90, 178, 15)
+    # pltVectorField.create_arrow(178, 15, 245, 7)
+    
+    pltVectorField.setScale([-10, 10], [-100, 100])
+    function = "2*x**3 - 8*x**2 + 7" 
+    #function = "-x**2"
+    x = -10
+    previous = [x, eval(function)]
+    while x <= 10:
+        y = eval(function)
+        pltVectorField.create_curve(previous[0], previous[1], x, y)
+        previous = [x, y]
+        x += 1
+        
+    x = -11
+    previous = [x, eval(function)]
+    x = -10
+    while x <= 10:
+        y = eval(function)
+        pltVectorField.create_arrow(previous[0], previous[1], x, y)
+        previous = [x, y]
+        x += 3
+        
 ##end TestArrow()
 
 
-def TestFunction(event):
-    currentIVP.setFunction(txtUFunction.get())
-##end TestFunction()
+
+def SolveIVP(event):
+    lstSolutions.delete(0, tk.END)
+    u = ivp.Exact()
+    diff = ivp.EulerMethod()
+    if len(txtDeltaT.get()) != 0:
+        diff.setDeltaT(txtDeltaT.get())
+        u.setDeltaT(txtDeltaT.get())
+    if len(txtNumberOfSteps.get()) != 0:
+        diff.setSteps(txtNumberOfSteps.get())
+        u.setSteps(txtNumberOfSteps.get())
+    if len(txtUInitial.get()) != 0:
+        diff.setInitialU(txtUInitial.get())
+        u.setInitialValue(txtUInitial.get())
+    if len(txtUFunction.get()) != 0:
+        u.evaluateFunction(txtUFunction.get())
+    if len(txtDifferential.get()) != 0:
+        diff.solve(txtDifferential.get())
+        
+    for i,vector in enumerate(diff.functionU):
+        lstSolutions.insert(i, vector)
+        
+    
+    # for i in range(0, len(diff.functionU), 2):
+    #     pltVectorField.create_arrow(diff.functionU[i][0], diff.functionU[i][1], diff.functionU[i+1][0], diff.functionU[i+1][1])
+    
+    UpdateLeftStatus("Status: Solved...")
+    UpdateMidStatus("F(t, u(t)) = " + str(diff))
+    UpdateRightStatus("u(0) = " + str(diff.functionU[0]))
+    
+##end SolveIVP()
 
 
 
@@ -85,33 +187,24 @@ def TestFunction(event):
 ######################################  GUI  ##################################
 
 gui = tk.Tk()
-gui.geometry("765x432")
+gui.geometry("965x532")
 gui.title("Initial Value Calculator")
 
 
 
-## menu -new, open, save, print -help, about
 
-
-
-"""
-menu and tool bar: file tools help
-main content: left panel sliders and input boxes, right side plot of the solution
-status bar: left display the differential, middle ??, right ??
-"""
         ############################# MAIN MENU  ###############################
         
 mnMain = tk.Menu(gui)
 
 mnFile = tk.Menu(mnMain, tearoff=0)
 mnFile.add_command(label="New Solution     ctrl+shift+N", command=lambda: NewSolution(None))
-mnFile.add_command(label="Open Solution", command=lambda: OpenSolution(None))
-mnFile.add_command(label="Save Solution", command=lambda: SaveSolution(None))
-mnFile.add_separator()
-mnFile.add_command(label="Print Solution", command=lambda: PrintSolution(None))
+mnFile.add_command(label="Open Solution    crrl+shift+O", command=lambda: OpenSolution(None))
+mnFile.add_command(label="Save Solution    ctrl+s", command=lambda: SaveSolution(None))
 mnMain.add_cascade(label="File", menu=mnFile)
 
 mnTools = tk.Menu(mnMain, tearoff=0)
+mnTools.add_command(label="Solve IVP     ctrl+shift+I", command=lambda: SolveIVP(None))
 mnMain.add_cascade(label="Tools", menu=mnTools)
 
 mnHelp = tk.Menu(mnMain, tearoff=0)
@@ -123,89 +216,111 @@ mnMain.add_cascade(label="Help", menu=mnHelp)
         ###########################  TOOLBAR  ###############################
 frmToolbar = tk.Frame(gui, bd=3, relief=tk.RAISED)
 btnPlaceholder = tk.Button(frmToolbar, text="test vector", command=lambda: TestArrow(None))
-btnTemporary = tk.Button(frmToolbar, text="test u", command=lambda: TestFunction(None))
+btnSolution = tk.Button(frmToolbar, text="Solve IVP", command=lambda: SolveIVP(None))
 
 
         ###########################  PRIMARY I/O  ############################
 ioPrimary = tk.PanedWindow(gui, orient=tk.HORIZONTAL, sashrelief=tk.RAISED)
 ioControls = tk.Frame(ioPrimary, bd=3, relief=tk.GROOVE)
 ioPlot = tk.Frame(ioPrimary, bd=3, relief=tk.GROOVE)
+ioList = tk.Frame(ioPrimary, bd=3, relief=tk.GROOVE)
 ioPrimary.add(ioControls)
 ioPrimary.add(ioPlot)
-
-lblFunctionInstructions = tk.Label(ioControls, text="Input the Time Dependent Function:\n(in Python syntax using t as the variable, or a comma separated list for a set)\nEX: 3*math.sqrt(2*t - t // 3) OR 4, 7, 18, 31, ...")
-lblUFunction = tk.Label(ioControls, text="u(t)=")
-txtUFunction = tk.Entry(ioControls)
-txtVFunction = tk.Entry(ioControls)
-lblVFunction = tk.Label(ioControls, text="v(t)=")
+ioPrimary.add(ioList)
 
 
-lblInitialInstructions = tk.Label(ioControls, text="Input the inital values:\n(as a number)")
-lblInitial = tk.Label(ioControls, text="Input the Initial Values:")
-lblUInitial = tk.Label(ioControls, text="u(0)=")
-lblVInitial = tk.Label(ioControls, text="v(0)=")
-txtUInitial = tk.Entry(ioControls)
-txtVInitial = tk.Entry(ioControls)
-
-
-lblDeltaTInstructions = tk.Label(ioControls, text="Input the Time Interval:\n(as a number)")
-lblDeltaT = tk.Label(ioControls, text="\u0394t=")
-txtDeltaT = tk.Entry(ioControls)
-
-lblDifferentialInstructions = tk.Label(ioControls, text="Input the Time Dependent Differential Function:\n(in python syntax, use \"u\" and \"v\" for the above functions)\nEX: t*v*math.cos(u**3)*(3*u**2)")
+            ############################  INPUT PANEL  ##############################
+            
+lblDifferentialInstructions = tk.Label(ioControls, text="Input the Time Dependent Differential Function:\n(in python syntax, use \"u\" and \"v\" for the above functions,\n\"t\" for the variable, and separate piecewise with an \"&\")\nEX: t*math.cos(u**3)*(3*u**2)&(2*t**2)/math.sqrt(t**3)")
 lblDifferential = tk.Label(ioControls, text = "u'(t)=F(t, u(t))=")
 txtDifferential = tk.Entry(ioControls)
 
 
+lblInitialInstructions = tk.Label(ioControls, text="Input the inital values:\n(as numbers separated with an ampersand (&))")
+lblInitial = tk.Label(ioControls, text="Input the Initial Values:")
+lblUInitial = tk.Label(ioControls, text="u(0)=")
+txtUInitial = tk.Entry(ioControls)
+
+
+lblDeltaTInstructions = tk.Label(ioControls, text="Input the Time Interval and Number of steps to take:\n(as a number)")
+lblDeltaT = tk.Label(ioControls, text="\u0394t=")
+txtDeltaT = tk.Entry(ioControls)
+lblNumberOfSteps = tk.Label(ioControls, text="Steps=")
+txtNumberOfSteps = tk.Entry(ioControls)
+
+
+lblFunctionInstructions = tk.Label(ioControls, text="Input the Exact Solution Functions:\n(in Python syntax using t as the variable, or a comma separated list for a set)\nEX: 3*math.sqrt(2*t - t // 3) & 2*math.sin(3*t**2) OR 4, 7, 18, 31, ...")
+lblUFunction = tk.Label(ioControls, text="u(t)=")
+txtUFunction = tk.Entry(ioControls)
+
+
+
+        ##############################  PLOTTING PANEL  #################################
+        
 squareSize = 300
-pltVectorField = vf.VectorField(ioPlot, width=squareSize, height=squareSize, deltaX = 0.1)
-#pltVectorField.create_arrow(20, 20, 45, 45)
-#pltVectorField.plot(a=1, b=4)
+pltVectorField = vf.VectorField(ioPlot, width=squareSize, height=squareSize)
+
+
+
+        #############################  EVALUTATION TABLE  ###############################
+
+lstSolutions = tk.Listbox(ioList)
 
 
 
         ###########################  STATUS BAR  ############################
 frmStatus = tk.Frame(gui, bd=3, relief=tk.SUNKEN)
-lblLeftStatus = tk.Label(frmStatus, text="Status: ...")
-lblMidStatus = tk.Label(frmStatus, text="<progress>")
-lblRightStatus = tk.Label(frmStatus, text="<summary>")
+lblLeftStatus = tk.Label(frmStatus, text="Status: Ready to begin ...")
+lblMidStatus = tk.Label(frmStatus, text="<summary>")
+lblRightStatus = tk.Label(frmStatus, text="<results>")
 
 
         ############################  LOAD CONTROLS  #########################
+    ## main containers
 gui.config(menu=mnMain)
 frmToolbar.pack(fill="both")
 ioPrimary.pack(fill="both", expand=True)
 frmStatus.pack(fill="both")
 
 
+    ## toolbar
 btnPlaceholder.grid(row=0, column=0, padx=5, pady=10)
-btnTemporary.grid(row=0, column=1, padx=5, pady=10)
+btnSolution.grid(row=0, column=1, padx=5, pady=10)
 
-lblFunctionInstructions.grid(row=0, column=0, columnspan=4, pady=7)
-lblUFunction.grid(row=1, column=0)
-txtUFunction.grid(row=1, column=1)
-lblVFunction.grid(row=1, column=2)
-txtVFunction.grid(row=1, column=3)
+    ## input fields
+lblDifferentialInstructions.grid(row=0, column=0, columnspan=4, pady=7)
+lblDifferential.grid(row=1, column=0)
+txtDifferential.grid(row=1, column=1, columnspan=3, sticky="EW")
+
 
 lblInitialInstructions.grid(row=2, column=0, columnspan=4, pady=7)
 lblUInitial.grid(row=3, column=0)
-txtUInitial.grid(row=3, column=1)
-lblVInitial.grid(row=3, column=2)
-txtVInitial.grid(row=3, column=3)
+txtUInitial.grid(row=3, column=1, columnspan=3, sticky="EW")
+
 
 lblDeltaTInstructions.grid(row=4, column=0, columnspan=4, pady=7)
 lblDeltaT.grid(row=5, column=0)
 txtDeltaT.grid(row=5, column=1)
+lblNumberOfSteps.grid(row=5, column=2)
+txtNumberOfSteps.grid(row=5, column=3)
 
-lblDifferentialInstructions.grid(row=6, column=0, columnspan=4, pady=7)
-lblDifferential.grid(row=7, column=0)
-txtDifferential.grid(row=7, column=1)
+lblFunctionInstructions.grid(row=6, column=0, columnspan=4, pady=7)
+lblUFunction.grid(row=7, column=0)
+txtUFunction.grid(row=7, column=1, columnspan=3, sticky="EW")
 
+    ## plot area
 pltVectorField.grid(row=0, column=1, padx=10, pady=10)
 
-lblLeftStatus.grid(row=0, column=0, padx=90)
-lblMidStatus.grid(row=0, column=1, padx=90)
-lblRightStatus.grid(row=0, column=2, padx=90)
+    ## solutions table
+lstSolutions.pack(fill="both", expand=True) ##find a better way to display table???
+
+
+    ## status bar
+
+lblLeftStatus.pack(side="left")
+
+lblRightStatus.pack(side="right")
+lblMidStatus.pack(side="right", padx=20)
 
 
 
@@ -213,7 +328,7 @@ lblRightStatus.grid(row=0, column=2, padx=90)
 gui.bind("<Control-Shift-KeyPress-N>", lambda event: NewSolution(event))
 gui.bind("<Control-Shift-KeyPress-O>", lambda event: OpenSolution(event))
 gui.bind("<Control-KeyPress-s>", lambda event: SaveSolution(event))
-gui.bind("<Control-Shift-KeyPress-P>", lambda event: PrintSolution(event))
+gui.bind("<Control-Shift-KeyPress-I>", lambda event: SolveIVP(event))
 
 gui.mainloop()
 
