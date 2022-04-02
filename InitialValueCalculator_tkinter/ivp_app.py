@@ -7,6 +7,8 @@ Created on Sat Mar 19 09:36:14 2022
 @language: Python 3.10.2
 
 @summary: This file is the Graphcial User Interface (GUI) for an Initial Value Problem calculator using Euler's Method to solve
+
+@note: the lines that relate to the project are [156 - 185]** CHANGE THIS AT SUBMISSION: SolveIVP function, the bulk of the problem at hand is in the file ivp.py located in the lib folder.
 """
 
 import tkinter as tk
@@ -14,6 +16,7 @@ import tkinter.filedialog
 import lib.ivp as ivp
 import lib.vectorfield as vf
 import lib.infodialog as info
+import lib.table as table
 
 
 # u = ivp.Exact()
@@ -21,6 +24,9 @@ import lib.infodialog as info
 
 #######################################  Functions  ##########################
 
+##
+# Method to reset the GUI for a new solution to be entered.
+# @param event -the hardware event used to call this method --probably not used in a simple application such as this.
 def NewSolution(event):
     txtDifferential.delete(0, tk.END)
     txtUInitial.delete(0, tk.END)
@@ -31,10 +37,16 @@ def NewSolution(event):
     UpdateLeftStatus("Status: New IVP...")
     UpdateMidStatus("")
     UpdateRightStatus("")
+    lstIVPSolutions.clear()
+    lstExactSolutions.clear()
 ##end NewSolution()
 
 
+##
+# Method to retrieve a previously solved solution. The application files include a version of the Lorenz Attractor to demonstrate how to input differentials and exact solutions. NOTE: the save process only saves the text from the input fields, after opening a saved solution it is still necessary to click the "Solve IVP" button.
+# @param event -the hardware event used to call this method --probably not used in a simple application such as this.
 def OpenSolution(event):
+    ##should probably put a want to save dialog here
     inputs = []
     filepath = tk.filedialog.askopenfilename(defaultextension=".ivp", filetypes=(("IVP calculator", "*.ivp"),("All Files", "*.*") ))
     with open(filepath, "r") as fromFile:
@@ -45,6 +57,8 @@ def OpenSolution(event):
     txtDeltaT.delete(0, tk.END)
     txtNumberOfSteps.delete(0, tk.END)
     txtUFunction.delete(0, tk.END)
+    lstIVPSolutions.clear()
+    lstExactSolutions.clear()
     
     txtDifferential.insert(0,inputs[0])
     txtUInitial.insert(0,inputs[1])
@@ -57,6 +71,10 @@ def OpenSolution(event):
 ##end OpenSolution()
 
 
+
+##
+# Method to store a solution to a differential. NOTE: the save process only saves the text from the input fields, after opening a saved solution it is still necessary to click the "Solve IVP" button.
+# @param event -the hardware event used to call this method --probably not used in a simple application such as this.
 def SaveSolution(event):
     inputs = [txtDifferential.get(), 
               txtUInitial.get(),
@@ -73,13 +91,10 @@ def SaveSolution(event):
 ##end SaveSolution
 
 
-# def PrintSolution(event):
-#     filepath = tk.filedialog.asksaveasfilename(defaultextension=".txt", filetypes=(("text file", "*.txt"),("All Files", "*.*") ))
-#     with open(filepath, "w") as toFile:
-#         toFile.write(str(u))
-# ##end PrintSolution()
 
-
+##
+# Method to pull up help instructions right inside the Graphical User Interface. The help functions are stored in a text file if there is a preference to simply read them directly.
+# @param event -the hardware event used to call this method --probably not used in a simple application such as this.
 def ShowHelp(event):
     dlgHelp = tk.Toplevel(gui)
     dlgHelp.geometry("432x345")
@@ -93,6 +108,9 @@ def ShowHelp(event):
 ##end ShowHelp()
 
 
+##
+# Method to pull up general information about this project directly in the Graphical User Interface. 
+# @param event -the hardware event used to call this method --probably not used in a simple application such as this.
 def ShowAbout(event):
     dlgAbout = tk.Toplevel(gui)
     dlgAbout.geometry("432x345")
@@ -106,20 +124,33 @@ def ShowAbout(event):
 ##end ShowAbout()
 
 
+##
+# Method to update the "general" portion of the status bar.
+# @param leftStatus -string to be displayed on the status bar
 def UpdateLeftStatus(leftStatus):
     lblLeftStatus["text"] = leftStatus
 ##end UpdateStatusLeft()
 
+
+##
+# Method to update the "summary" portion of the status bar, typically will display the time dependent differential equation after solving.
+# @param midStatus -string to be displayed on the status bar
 def UpdateMidStatus(midStatus):
     lblMidStatus["text"] = midStatus
 ##end UpdateStatusLeft()
 
+
+##
+# Method to update the "progress" portion of the status bar, typically will display the initial value after solving
+# @param rightStatus -string to be displayed on the status bar
 def UpdateRightStatus(rightStatus):
     lblRightStatus["text"] = rightStatus
 ##end UpdateStatusLeft()
 
 
 
+##
+# For test purposes only while developing the plot area vector field
 def TestArrow(event):
     # pltVectorField.create_arrow(20, 20, 45, 45)
     # pltVectorField.create_arrow(45, 45, 103, 90)
@@ -150,8 +181,10 @@ def TestArrow(event):
 
 
 
-def SolveIVP(event):
-    lstSolutions.delete(0, tk.END)
+##
+# Tthe primary function call as per the assignment, it will calculate a two dimensional list containing the solutions found from the time dependent differential using Euler's method as well as calculate a two dimensional list of corresponding exact solutions
+# @param event -the hardware event used to call this method --probably not used in a simple application such as this.
+def SolveIVP(event): 
     u = ivp.Exact()
     diff = ivp.EulerMethod()
     if len(txtDeltaT.get()) != 0:
@@ -167,9 +200,10 @@ def SolveIVP(event):
         u.evaluateFunction(txtUFunction.get())
     if len(txtDifferential.get()) != 0:
         diff.solve(txtDifferential.get())
-        
-    for i,vector in enumerate(diff.functionU):
-        lstSolutions.insert(i, vector)
+
+
+    lstIVPSolutions.rows = diff.functionU
+    lstIVPSolutions.layout()
         
     
     # for i in range(0, len(diff.functionU), 2):
@@ -183,6 +217,11 @@ def SolveIVP(event):
 
 
 
+
+
+"""
+The rest of this script is to put the Graphical User Interface together for Input/Output purposes
+"""
 
 ######################################  GUI  ##################################
 
@@ -264,7 +303,9 @@ pltVectorField = vf.VectorField(ioPlot, width=squareSize, height=squareSize)
 
         #############################  EVALUTATION TABLE  ###############################
 
-lstSolutions = tk.Listbox(ioList)
+#lstSolutions = tk.Listbox(ioList)
+lstIVPSolutions = table.Table(ioList, rows=[[0, 0]], title="IVP Solution")
+lstExactSolutions = table.Table(ioList, [[1, 1]], title="Exact Solution")
 
 
 
@@ -312,7 +353,8 @@ txtUFunction.grid(row=7, column=1, columnspan=3, sticky="EW")
 pltVectorField.grid(row=0, column=1, padx=10, pady=10)
 
     ## solutions table
-lstSolutions.pack(fill="both", expand=True) ##find a better way to display table???
+lstIVPSolutions.pack(fill="both", expand=True)
+lstExactSolutions.pack(fill="both", expand=True)
 
 
     ## status bar
@@ -330,8 +372,12 @@ gui.bind("<Control-Shift-KeyPress-O>", lambda event: OpenSolution(event))
 gui.bind("<Control-KeyPress-s>", lambda event: SaveSolution(event))
 gui.bind("<Control-Shift-KeyPress-I>", lambda event: SolveIVP(event))
 
-gui.mainloop()
 
+
+if __name__=="__main__":
+    NewSolution(None)
+    gui.mainloop()
+    
 
 
 

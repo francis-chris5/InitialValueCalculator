@@ -10,7 +10,14 @@ Created on Sat Mar 26 09:10:30 2022
 import tkinter as tk
 import tkinter.ttk as ttk
 
+##
+# Object to load the user manual instructions and about pages into the gui with a scroll bar
 class InfoDialog(tk.Frame):
+    
+    ##
+    # Constructor
+    # @param parent -the tk widget which this widget will be loaded into
+    # @param info -the string to load onto the dialog box (probably the contents of a text file with help or about information)
     def __init__(self, parent, info, width=432, height=345, *args, **kwargs):
         super().__init__(parent,*args, **kwargs)
         self.info = info
