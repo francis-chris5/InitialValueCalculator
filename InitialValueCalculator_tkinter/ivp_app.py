@@ -39,6 +39,7 @@ def NewSolution(event):
     UpdateRightStatus("")
     lstIVPSolutions.clear()
     lstExactSolutions.clear()
+    pltVectorField.clearPlots()
 ##end NewSolution()
 
 
@@ -68,6 +69,7 @@ def OpenSolution(event):
     UpdateLeftStatus("Status: Opened " + filepath)
     UpdateMidStatus("")
     UpdateRightStatus("")
+    pltVectorField.clearPlots()
 ##end OpenSolution()
 
 
@@ -88,6 +90,7 @@ def SaveSolution(event):
     UpdateLeftStatus("Status: Saved " + filepath)
     UpdateMidStatus("")
     UpdateRightStatus("")
+    pltVectorField.clearPlots()
 ##end SaveSolution
 
 
@@ -148,6 +151,10 @@ def UpdateRightStatus(rightStatus):
 ##end UpdateStatusLeft()
 
 
+def ClearPlots(event):
+    pltVectorField.clearPlots()
+##end ClearPlots
+
 
 ##
 # For test purposes only while developing the plot area vector field
@@ -199,11 +206,42 @@ def SolveIVP(event):
     if len(txtUFunction.get()) != 0:
         u.evaluateFunction(txtUFunction.get())
     if len(txtDifferential.get()) != 0:
+        ##diff.setSolutionFunctions(txtUFunction.get()) ##I don't think I'm supposed to plug this in for Euler's, that's the improved RK method
         diff.solve(txtDifferential.get())
+        diff.minMax()
 
+        ## plot the estimated and exact solutions
+    if isinstance(diff.functionU[0], list):
+        pltVectorField.setScale(diff.xRange, diff.yRange)
+        counter = 1
+        previous = [diff.functionU[0][0], diff.functionU[0][1]]
+        while counter < len(diff.functionU):
+            x = diff.functionU[counter][0]
+            y = diff.functionU[counter][1]
+            pltVectorField.create_arrow(previous[0], previous[1], x, y)
+            previous = [x, y]
+            counter += 1
+            
+        counter = 1
+        previous = [u.solutions[0][0], u.solutions[0][1]]
+        while counter < len(u.solutions):
+            x = u.solutions[0][0]
+            y = u.solutions[0][1]
+            pltVectorField.create_curve(previous[0], previous[1], x, y)
+            previous = [x, y]
+            counter += 1
+    else:
+        ## still need to plot the non-vector differentials
+        pass
+    
 
+        ## Tables of solutions
+    lstIVPSolutions.deltaT = diff.deltaT
     lstIVPSolutions.rows = diff.functionU
     lstIVPSolutions.layout()
+    lstExactSolutions.deltaT = u.deltaT
+    lstExactSolutions.rows = u.solutions
+    lstExactSolutions.layout()
         
     
     # for i in range(0, len(diff.functionU), 2):
@@ -244,6 +282,7 @@ mnMain.add_cascade(label="File", menu=mnFile)
 
 mnTools = tk.Menu(mnMain, tearoff=0)
 mnTools.add_command(label="Solve IVP     ctrl+shift+I", command=lambda: SolveIVP(None))
+mnTools.add_command(label="Clear Plots", command=lambda: ClearPlots(None))
 mnMain.add_cascade(label="Tools", menu=mnTools)
 
 mnHelp = tk.Menu(mnMain, tearoff=0)
@@ -256,6 +295,7 @@ mnMain.add_cascade(label="Help", menu=mnHelp)
 frmToolbar = tk.Frame(gui, bd=3, relief=tk.RAISED)
 btnPlaceholder = tk.Button(frmToolbar, text="test vector", command=lambda: TestArrow(None))
 btnSolution = tk.Button(frmToolbar, text="Solve IVP", command=lambda: SolveIVP(None))
+btnClearPlot = tk.Button(frmToolbar, text="Clear Plots", command=lambda: ClearPlots(None))
 
 
         ###########################  PRIMARY I/O  ############################
@@ -327,6 +367,7 @@ frmStatus.pack(fill="both")
     ## toolbar
 btnPlaceholder.grid(row=0, column=0, padx=5, pady=10)
 btnSolution.grid(row=0, column=1, padx=5, pady=10)
+btnClearPlot.grid(row=0, column=2, padx=5, pady=10)
 
     ## input fields
 lblDifferentialInstructions.grid(row=0, column=0, columnspan=4, pady=7)

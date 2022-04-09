@@ -11,8 +11,6 @@ Created on Sat Mar 19 13:11:17 2022
 import tkinter as tk
 import math
 
-def squareFunction(x):
-    return x ** 2
 
 ##
 # The VectorField object is a plotting surface for a initial value problem solved using Euler's Method (in black) and the exact solution (in red) for comparison.
@@ -56,21 +54,7 @@ class VectorField(tk.Canvas):
             ## vertical axis
         self.create_line(float(self["width"])/2, 0, float(self["width"])/2, float(self["height"]), fill="blue", width=2)
         
-        
-
-    # ##
-    # # if time allows move the looping through solutions inside the object here
-    # def plot(self, a=1, b=1):
-    #     ## max value needs to be forty-five percent of plot area
-    #     ## each plot draws an error of length deltaT
-    #     i = a*self.wide + self.wide
-    #     previous = i-1
-    #     while i < b*self.wide+self.wide:
-    #         self.create_arrow(previous, int(self["height"]) - self.tall*squareFunction(previous/self.wide), i, int(self["height"]) - self.tall*squareFunction(i/self.wide))          
-    #         previous = i
-    #         i += self.deltaX*self.wide
-            
-            
+      
       
     ##
     # Method to plot a single arrow on the vector field. Call this repeatedly to plot the entire solution. Hopefully this will be updated for vector like coordinates (two lists) before due date.
@@ -106,6 +90,9 @@ class VectorField(tk.Canvas):
         self.create_line(a, b, c, d, width=3, fill="red")
         
 
+    def clearPlots(self):
+        self.delete("all")
+        self.showAxis()
 
 
 
