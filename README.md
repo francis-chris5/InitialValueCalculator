@@ -22,6 +22,7 @@ A project in a Mathematical Modeling class, number MATH 537 at Indiana State Uni
 <br>
 <h2>Remaining To-Do</h2>
 <ul>
+  <li>set the plot to scale accurately depending on results (that tiny bit at the far right is the output from this solution in picture above)</li>
   <li>lots of other stuff that might be nice here</li>
   <li>polish up some appearance/formatting for final version</li>
   <li>switch from hardcoded 1d and 2d funciton input to any number of dimensions --plan for this in comments</li>
