@@ -28,7 +28,6 @@ class ScrollFrame(tk.Frame):
         self.cvsMain.configure(yscrollcommand=self.scrVertical.set)
 
         self.cvsMain.pack(fill="both", expand=True, padx=5, pady=5)
-        
         self.scrVertical.pack(fill="y", side="right")
         
         

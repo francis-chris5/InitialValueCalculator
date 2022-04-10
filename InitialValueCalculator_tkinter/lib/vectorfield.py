@@ -34,14 +34,14 @@ class VectorField(tk.Canvas):
     # @param yRange -a 2-dimensional list/tuple with the minimum (index 0) and the maximum (index 1) values to be plotted in the range
     def setScale(self, xRange, yRange):
         if abs(0 - xRange[0]) > abs(0 - xRange[1]):
-            self.xScale = self.wide / xRange[0] * (2/3)
+            self.xScale = self.wide / xRange[0] * (1/3)
         else:
-            self.xScale = self.wide / xRange[1] * (2/3)
+            self.xScale = self.wide / xRange[1] * (1/3)
             
         if abs(0 - yRange[0]) > abs(0 - yRange[1]):
-            self.yScale = self.tall / yRange[0] * (2/3)
+            self.yScale = self.tall / yRange[0] * (1/3)
         else:
-            self.yScale = self.tall / yRange[1] * (2/3)
+            self.yScale = self.tall / yRange[1] * (1/3)
             
 
 

@@ -20,8 +20,8 @@ import lib.table as table
 import lib.scrollframe as scroll
 
 
-# u = ivp.Exact()
-# diff = ivp.EulerMethod()
+u = ivp.Exact()
+diff = ivp.EulerMethod()
 
 #######################################  Functions  ##########################
 
@@ -29,6 +29,9 @@ import lib.scrollframe as scroll
 # Method to reset the GUI for a new solution to be entered.
 # @param event -the hardware event used to call this method --probably not used in a simple application such as this.
 def NewSolution(event):
+    global diff, u
+    u = ivp.Exact()
+    diff = ivp.EulerMethod()
     txtDifferential.delete(0, tk.END)
     txtUInitial.delete(0, tk.END)
     txtDeltaT.delete(0, tk.END)
@@ -41,6 +44,8 @@ def NewSolution(event):
     lstIVPSolutions.clear()
     lstExactSolutions.clear()
     pltVectorField.clearPlots()
+    pltVectorField.xScale = 1
+    pltVectorField.yScale = 1
 ##end NewSolution()
 
 
@@ -49,6 +54,9 @@ def NewSolution(event):
 # @param event -the hardware event used to call this method --probably not used in a simple application such as this.
 def OpenSolution(event):
     ##should probably put a want to save dialog here
+    global diff, u
+    u = ivp.Exact()
+    diff = ivp.EulerMethod()
     inputs = []
     filepath = tk.filedialog.askopenfilename(defaultextension=".ivp", filetypes=(("IVP calculator", "*.ivp"),("All Files", "*.*") ))
     with open(filepath, "r") as fromFile:
@@ -71,6 +79,8 @@ def OpenSolution(event):
     UpdateMidStatus("")
     UpdateRightStatus("")
     pltVectorField.clearPlots()
+    pltVectorField.xScale = 1
+    pltVectorField.yScale = 1
 ##end OpenSolution()
 
 
@@ -91,7 +101,6 @@ def SaveSolution(event):
     UpdateLeftStatus("Status: Saved " + filepath)
     UpdateMidStatus("")
     UpdateRightStatus("")
-    pltVectorField.clearPlots()
 ##end SaveSolution
 
 
@@ -157,34 +166,9 @@ def ClearPlots(event):
 ##end ClearPlots
 
 
-
-##
-# Tthe primary function call as per the assignment, it will calculate a two dimensional list containing the solutions found from the time dependent differential using Euler's method as well as calculate a two dimensional list of corresponding exact solutions
-# @param event -the hardware event used to call this method --probably not used in a simple application such as this.
-def SolveIVP(event): 
-    u = ivp.Exact()
-    diff = ivp.EulerMethod()
-    if len(txtDeltaT.get()) != 0:
-        diff.setDeltaT(txtDeltaT.get())
-        u.setDeltaT(txtDeltaT.get())
-    if len(txtNumberOfSteps.get()) != 0:
-        diff.setSteps(txtNumberOfSteps.get())
-        u.setSteps(txtNumberOfSteps.get())
-    if len(txtUInitial.get()) != 0:
-        diff.setInitialU(txtUInitial.get())
-        u.setInitialValue(txtUInitial.get())
-    if len(txtUFunction.get()) != 0:
-        u.evaluateFunction(txtUFunction.get())
-    if len(txtDifferential.get()) != 0:
-        ##diff.setSolutionFunctions(txtUFunction.get()) ##I don't think I'm supposed to plug this in for Euler's, that's the improved RK method
-        diff.solve(txtDifferential.get())
-        diff.minMax()
-
+def PlotSolution(event):
         ## plot the estimated and exact solutions
     if isinstance(diff.functionU[0], list):
-        pltVectorField.setScale(diff.xRange, diff.yRange)
-        #pltVectorField.xScale = 30
-        #pltVectorField.yScale = 24000
         counter = 1
         previous = [diff.functionU[0][0], diff.functionU[0][1]]
         while counter < len(diff.functionU):
@@ -211,7 +195,7 @@ def SolveIVP(event):
         previous = [estimate[0][0], estimate[0][1]]
         while counter < len(diff.functionU):
             x = estimate[counter][0]
-            y = estimate[counter][0]
+            y = estimate[counter][1]
             pltVectorField.create_arrow(previous[0], previous[1], x, y)
             previous = [x, y]
             counter += 1
@@ -228,9 +212,55 @@ def SolveIVP(event):
                 pltVectorField.create_curve(previous[0], previous[1], x, y)
                 previous = [x, y]
                 counter += 1
-        
-    
+##end PlotSolution()
 
+
+def ZoomIn(event):
+    ## uhm... nothing seems to work right with zoom, in out do the same thing for +- and */
+    #if pltVectorField.xScale > 100 and pltVectorField.yScale > 100:
+    pltVectorField.xScale /= 1.5
+    pltVectorField.yScale /= 1.5
+    ClearPlots(None)
+    PlotSolution(None)
+##end ZoomIn()
+
+
+def ZoomOut(event):
+    pltVectorField.xScale *= 1.5
+    pltVectorField.yScale *= 1.5
+    ClearPlots(None)
+    PlotSolution(None)
+##end ZoomOut()
+
+
+
+
+
+##
+# Tthe primary function call as per the assignment, it will calculate a two dimensional list containing the solutions found from the time dependent differential using Euler's method as well as calculate a two dimensional list of corresponding exact solutions
+# @param event -the hardware event used to call this method --probably not used in a simple application such as this.
+def SolveIVP(event): 
+    # u = ivp.Exact()
+    # diff = ivp.EulerMethod()
+    if len(txtDeltaT.get()) != 0:
+        diff.setDeltaT(txtDeltaT.get())
+        u.setDeltaT(txtDeltaT.get())
+    if len(txtNumberOfSteps.get()) != 0:
+        diff.setSteps(txtNumberOfSteps.get())
+        u.setSteps(txtNumberOfSteps.get())
+    if len(txtUInitial.get()) != 0:
+        diff.setInitialU(txtUInitial.get())
+        u.setInitialValue(txtUInitial.get())
+    if len(txtUFunction.get()) != 0:
+        u.evaluateFunction(txtUFunction.get())
+    if len(txtDifferential.get()) != 0:
+        ##diff.setSolutionFunctions(txtUFunction.get()) ##I don't think I'm supposed to plug this in for Euler's, that's the improved RK method
+        diff.solve(txtDifferential.get())
+        diff.minMax()
+        
+    pltVectorField.setScale(diff.xRange, diff.yRange)
+    PlotSolution(None)
+        
         ## Tables of solutions
     lstIVPSolutions.deltaT = diff.deltaT
     lstIVPSolutions.rows = diff.functionU
@@ -238,11 +268,8 @@ def SolveIVP(event):
     lstExactSolutions.deltaT = u.deltaT
     lstExactSolutions.rows = u.solutions
     lstExactSolutions.layout()
-        
-    
-    # for i in range(0, len(diff.functionU), 2):
-    #     pltVectorField.create_arrow(diff.functionU[i][0], diff.functionU[i][1], diff.functionU[i+1][0], diff.functionU[i+1][1])
-    
+
+
     UpdateLeftStatus("Status: Solved...")
     UpdateMidStatus("F(t, u(t)) = " + str(diff))
     UpdateRightStatus("u(0) = " + str(diff.functionU[0]))
@@ -344,7 +371,8 @@ txtUFunction = tk.Entry(ioControls)
         
 squareSize = 300
 pltVectorField = vf.VectorField(ioPlot, width=squareSize, height=squareSize, border=2, relief="groove")
-
+btnZoomIn = tk.Button(ioPlot, text="Zoom In", command=lambda: ZoomIn(None))
+btnZoomOut = tk.Button(ioPlot, text="Zoom Out", command=lambda: ZoomOut(None))
 
 
         #############################  EVALUTATION TABLE  ###############################
@@ -352,7 +380,7 @@ pltVectorField = vf.VectorField(ioPlot, width=squareSize, height=squareSize, bor
 #lstSolutions = tk.Listbox(ioList)
 scrSolutionList = scroll.ScrollFrame(ioList)
 lstIVPSolutions = table.Table(scrSolutionList.frmContent, rows=[[0, 0]], title="IVP Solution")
-lstExactSolutions = table.Table(scrSolutionList.frmContent, [[1, 1]], title="Exact Solution")
+lstExactSolutions = table.Table(scrSolutionList.frmContent, rows=[[1, 1]], title="Exact Solution")
 
 
 
@@ -401,7 +429,9 @@ lblUFunction.grid(row=7, column=0)
 txtUFunction.grid(row=7, column=1, columnspan=3, sticky="EW")
 
     ## plot area
-pltVectorField.grid(row=0, column=1, padx=10, pady=10)
+pltVectorField.grid(row=0, column=0, columnspan=2, padx=10, pady=10)
+#btnZoomIn.grid(row=1, column=0, padx=10, pady=25)
+#btnZoomOut.grid(row=1, column=1, padx=10, pady=25)
 
     ## solutions table
 scrSolutionList.pack(fill="both", expand=True)
