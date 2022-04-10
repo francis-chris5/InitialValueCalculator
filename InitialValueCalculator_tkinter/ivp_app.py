@@ -8,7 +8,7 @@ Created on Sat Mar 19 09:36:14 2022
 
 @summary: This file is the Graphcial User Interface (GUI) for an Initial Value Problem calculator using Euler's Method to solve
 
-@note: the lines that relate to the project are [156 - 185]** CHANGE THIS AT SUBMISSION: SolveIVP function, the bulk of the problem at hand is in the file ivp.py located in the lib folder.
+@note: the lines that relate to the project are lines [161 - 226]** CHANGE THIS AT SUBMISSION: SolveIVP method, the bulk of the problem at hand is in the file ivp.py located in the lib folder.
 """
 
 import tkinter as tk
@@ -17,6 +17,7 @@ import lib.ivp as ivp
 import lib.vectorfield as vf
 import lib.infodialog as info
 import lib.table as table
+import lib.scrollframe as scroll
 
 
 # u = ivp.Exact()
@@ -156,37 +157,6 @@ def ClearPlots(event):
 ##end ClearPlots
 
 
-##
-# For test purposes only while developing the plot area vector field
-def TestArrow(event):
-    # pltVectorField.create_arrow(20, 20, 45, 45)
-    # pltVectorField.create_arrow(45, 45, 103, 90)
-    # pltVectorField.create_arrow(103, 90, 178, 15)
-    # pltVectorField.create_arrow(178, 15, 245, 7)
-    
-    pltVectorField.setScale([-10, 10], [-100, 100])
-    function = "2*x**3 - 8*x**2 + 7" 
-    #function = "-x**2"
-    x = -10
-    previous = [x, eval(function)]
-    while x <= 10:
-        y = eval(function)
-        pltVectorField.create_curve(previous[0], previous[1], x, y)
-        previous = [x, y]
-        x += 1
-        
-    x = -11
-    previous = [x, eval(function)]
-    x = -10
-    while x <= 10:
-        y = eval(function)
-        pltVectorField.create_arrow(previous[0], previous[1], x, y)
-        previous = [x, y]
-        x += 3
-        
-##end TestArrow()
-
-
 
 ##
 # Tthe primary function call as per the assignment, it will calculate a two dimensional list containing the solutions found from the time dependent differential using Euler's method as well as calculate a two dimensional list of corresponding exact solutions
@@ -213,6 +183,8 @@ def SolveIVP(event):
         ## plot the estimated and exact solutions
     if isinstance(diff.functionU[0], list):
         pltVectorField.setScale(diff.xRange, diff.yRange)
+        #pltVectorField.xScale = 30
+        #pltVectorField.yScale = 24000
         counter = 1
         previous = [diff.functionU[0][0], diff.functionU[0][1]]
         while counter < len(diff.functionU):
@@ -225,14 +197,38 @@ def SolveIVP(event):
         counter = 1
         previous = [u.solutions[0][0], u.solutions[0][1]]
         while counter < len(u.solutions):
-            x = u.solutions[0][0]
-            y = u.solutions[0][1]
+            x = u.solutions[counter][0]
+            y = u.solutions[counter][1]
             pltVectorField.create_curve(previous[0], previous[1], x, y)
             previous = [x, y]
             counter += 1
-    else:
-        ## still need to plot the non-vector differentials
-        pass
+    elif not isinstance(diff.functionU[0], list):
+        pltVectorField.setScale(diff.xRange, diff.yRange)
+        estimate = []
+        for i, x in enumerate(diff.functionU):
+            estimate.append([diff.deltaT * i, x])
+        counter = 1
+        previous = [estimate[0][0], estimate[0][1]]
+        while counter < len(diff.functionU):
+            x = estimate[counter][0]
+            y = estimate[counter][0]
+            pltVectorField.create_arrow(previous[0], previous[1], x, y)
+            previous = [x, y]
+            counter += 1
+        
+        if len(u.solutions) > 1:
+            actual = []
+            for i, x in enumerate(u.solutions):
+                actual.append([u.deltaT * i, x])
+            counter = 1
+            previous = [actual[0][0], actual[0][1]]
+            while counter < len(u.solutions):
+                x = actual[counter][0]
+                y = actual[counter][1]
+                pltVectorField.create_curve(previous[0], previous[1], x, y)
+                previous = [x, y]
+                counter += 1
+        
     
 
         ## Tables of solutions
@@ -282,7 +278,7 @@ mnMain.add_cascade(label="File", menu=mnFile)
 
 mnTools = tk.Menu(mnMain, tearoff=0)
 mnTools.add_command(label="Solve IVP     ctrl+shift+I", command=lambda: SolveIVP(None))
-mnTools.add_command(label="Clear Plots", command=lambda: ClearPlots(None))
+mnTools.add_command(label="Clear Plots   ctrl+shift+L", command=lambda: ClearPlots(None))
 mnMain.add_cascade(label="Tools", menu=mnTools)
 
 mnHelp = tk.Menu(mnMain, tearoff=0)
@@ -293,9 +289,19 @@ mnMain.add_cascade(label="Help", menu=mnHelp)
 
         ###########################  TOOLBAR  ###############################
 frmToolbar = tk.Frame(gui, bd=3, relief=tk.RAISED)
-btnPlaceholder = tk.Button(frmToolbar, text="test vector", command=lambda: TestArrow(None))
-btnSolution = tk.Button(frmToolbar, text="Solve IVP", command=lambda: SolveIVP(None))
-btnClearPlot = tk.Button(frmToolbar, text="Clear Plots", command=lambda: ClearPlots(None))
+imgNew = tk.PhotoImage(file="images/new.png")
+imgOpen = tk.PhotoImage(file="images/open.png")
+imgSave = tk.PhotoImage(file="images/save.png")
+imgSolve = tk.PhotoImage(file="images/solve.png")
+imgClear = tk.PhotoImage(file="images/clear.png")
+imgHelp = tk.PhotoImage(file="images/help.png")
+btnNew = tk.Button(frmToolbar, image=imgNew, command=lambda: NewSolution(None))
+btnOpen = tk.Button(frmToolbar, image=imgOpen, command=lambda: OpenSolution(None))
+btnSave = tk.Button(frmToolbar, image=imgSave, command=lambda: SaveSolution(None))
+btnSolution = tk.Button(frmToolbar, image=imgSolve, command=lambda: SolveIVP(None))
+btnClearPlot = tk.Button(frmToolbar, image=imgClear, command=lambda: ClearPlots(None))
+btnHelp = tk.Button(frmToolbar, image=imgHelp, command=lambda: ShowHelp(None))
+
 
 
         ###########################  PRIMARY I/O  ############################
@@ -337,15 +343,16 @@ txtUFunction = tk.Entry(ioControls)
         ##############################  PLOTTING PANEL  #################################
         
 squareSize = 300
-pltVectorField = vf.VectorField(ioPlot, width=squareSize, height=squareSize)
+pltVectorField = vf.VectorField(ioPlot, width=squareSize, height=squareSize, border=2, relief="groove")
 
 
 
         #############################  EVALUTATION TABLE  ###############################
 
 #lstSolutions = tk.Listbox(ioList)
-lstIVPSolutions = table.Table(ioList, rows=[[0, 0]], title="IVP Solution")
-lstExactSolutions = table.Table(ioList, [[1, 1]], title="Exact Solution")
+scrSolutionList = scroll.ScrollFrame(ioList)
+lstIVPSolutions = table.Table(scrSolutionList.frmContent, rows=[[0, 0]], title="IVP Solution")
+lstExactSolutions = table.Table(scrSolutionList.frmContent, [[1, 1]], title="Exact Solution")
 
 
 
@@ -365,9 +372,12 @@ frmStatus.pack(fill="both")
 
 
     ## toolbar
-btnPlaceholder.grid(row=0, column=0, padx=5, pady=10)
-btnSolution.grid(row=0, column=1, padx=5, pady=10)
-btnClearPlot.grid(row=0, column=2, padx=5, pady=10)
+btnNew.grid(row=0, column=0, padx=5, pady=10)
+btnOpen.grid(row=0, column=1, padx=5, pady=10)
+btnSave.grid(row=0, column=2, padx=5, pady=10)
+btnSolution.grid(row=0, column=3, padx=5, pady=10)
+btnClearPlot.grid(row=0, column=4, padx=5, pady=10)
+btnHelp.grid(row=0, column=5, padx=5, pady=10)
 
     ## input fields
 lblDifferentialInstructions.grid(row=0, column=0, columnspan=4, pady=7)
@@ -394,6 +404,7 @@ txtUFunction.grid(row=7, column=1, columnspan=3, sticky="EW")
 pltVectorField.grid(row=0, column=1, padx=10, pady=10)
 
     ## solutions table
+scrSolutionList.pack(fill="both", expand=True)
 lstIVPSolutions.pack(fill="both", expand=True)
 lstExactSolutions.pack(fill="both", expand=True)
 
@@ -412,6 +423,7 @@ gui.bind("<Control-Shift-KeyPress-N>", lambda event: NewSolution(event))
 gui.bind("<Control-Shift-KeyPress-O>", lambda event: OpenSolution(event))
 gui.bind("<Control-KeyPress-s>", lambda event: SaveSolution(event))
 gui.bind("<Control-Shift-KeyPress-I>", lambda event: SolveIVP(event))
+gui.bind("<Control-Shift-KeyPress-L>", lambda event: ClearPlots(event))
 
 
 

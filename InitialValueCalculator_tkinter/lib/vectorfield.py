@@ -34,14 +34,14 @@ class VectorField(tk.Canvas):
     # @param yRange -a 2-dimensional list/tuple with the minimum (index 0) and the maximum (index 1) values to be plotted in the range
     def setScale(self, xRange, yRange):
         if abs(0 - xRange[0]) > abs(0 - xRange[1]):
-            self.xScale = self.wide / xRange[0]
+            self.xScale = self.wide / xRange[0] * (2/3)
         else:
-            self.xScale = self.wide / xRange[1]
+            self.xScale = self.wide / xRange[1] * (2/3)
             
         if abs(0 - yRange[0]) > abs(0 - yRange[1]):
-            self.yScale = self.tall / yRange[0]
+            self.yScale = self.tall / yRange[0] * (2/3)
         else:
-            self.yScale = self.tall / yRange[1]
+            self.yScale = self.tall / yRange[1] * (2/3)
             
 
 
@@ -75,7 +75,6 @@ class VectorField(tk.Canvas):
         self.create_line(c, d, c+10*math.sin(angle-math.pi/6), d-10*math.cos(angle-math.pi/6), width=2)
         self.create_line(c, d, c-10*math.sin(angle+math.pi/6), d+10*math.cos(angle+math.pi/6), width=2)
         
-        
     ##
     # Method to plot a single line segment on the vector field. Call this repeatedly to plot the entire exact solution with the end point always one pixel over (domain) from the start point. Hopefully this will be updated for vector like coordinates (two lists) before due date.
     # @param a -starting x coordinate
@@ -87,7 +86,7 @@ class VectorField(tk.Canvas):
         b = b * self.yScale + self.tall
         c = c * self.xScale + self.wide
         d = d * self.yScale + self.tall
-        self.create_line(a, b, c, d, width=3, fill="red")
+        self.create_line(a, b, c, d, width=2, fill="red")
         
 
     def clearPlots(self):
