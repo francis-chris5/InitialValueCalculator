@@ -15,14 +15,14 @@ A project in a Mathematical Modeling class, number MATH 537 at Indiana State Uni
 
 <p>Here's a picture of the progress so far... I don't know why the y component on the vectors is blowing up right now... NOTE: the arrows and function on the vector field are test cases only and are completely unrelated to the IVP (test was: 2*x**3 - 8*x**2 + 7)</p>
 
-<img src="https://user-images.githubusercontent.com/50467171/162584604-85f6b636-a1aa-4ad6-b288-639d4a7c5d55.png"/>
+<img src="https://user-images.githubusercontent.com/50467171/162621916-6f7a43f4-e0ca-4735-b7a6-fd052b5ed404.png"/>
 
 <br>
 <br>
 <br>
 <h2>Remaining To-Do</h2>
 <ul>
-  <li>set the plot to scale accurately depending on results (that tiny bit at the far right is the output from this solution in picture above)</li>
+  <li>BUG: set the plot to scale accurately depending on results, the lorenz test case included should get a scale of x: 120, y:24000, but I'm getting 150,150</li>
   <li>lots of other stuff that might be nice here</li>
   <li>polish up some appearance/formatting for final version</li>
   <li>switch from hardcoded 1d and 2d funciton input to any number of dimensions --plan for this in comments</li>
