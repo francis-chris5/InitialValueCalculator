@@ -48,3 +48,15 @@ Input an Intial Value Problem
         
         Input the differential function using "u", "v", and "t" as the variables, and use an ampersand (&) to separate functions for a piecewise function, the differential cannot be a discrete set of values
         
+        
+
+    ********************************
+    
+Export CSV File
+        After solving the differential, the values found from Euler's method, and exact comparisons with the same time step when applicable, can be exported to csv files for use in other software.
+        
+        When a solution is created or opened the button will be grayed out, after solving the "Export to CSV" button will be active.
+        
+        
+
+

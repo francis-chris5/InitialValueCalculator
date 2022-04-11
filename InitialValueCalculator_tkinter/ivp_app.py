@@ -11,8 +11,12 @@ Created on Sat Mar 19 09:36:14 2022
 @note: the lines that relate to the project are lines [161 - 226]** CHANGE THIS AT SUBMISSION: SolveIVP method, the bulk of the problem at hand is in the file ivp.py located in the lib folder.
 """
 
+## Part of python language
 import tkinter as tk
-import tkinter.filedialog
+import tkinter.filedialog as fd
+import csv
+
+## custom libraries for this project
 import lib.ivp as ivp
 import lib.vectorfield as vf
 import lib.infodialog as info
@@ -46,6 +50,7 @@ def NewSolution(event):
     pltVectorField.clearPlots()
     pltVectorField.xScale = 1
     pltVectorField.yScale = 1
+    btnToCSV["state"] = "disabled"
 ##end NewSolution()
 
 
@@ -81,6 +86,7 @@ def OpenSolution(event):
     pltVectorField.clearPlots()
     pltVectorField.xScale = 1
     pltVectorField.yScale = 1
+    btnToCSV["state"] = "disabled"
 ##end OpenSolution()
 
 
@@ -274,7 +280,28 @@ def SolveIVP(event):
     UpdateMidStatus("F(t, u(t)) = " + str(diff))
     UpdateRightStatus("u(0) = " + str(diff.functionU[0]))
     
+    btnToCSV["state"] = "normal"
+    
 ##end SolveIVP()
+
+
+def ExportCSV(event):
+    filepath = fd.asksaveasfilename()
+    estimate = filepath + "_euler_method.csv"
+    exact = filepath + "_exact.csv"
+    with open(estimate, "w") as toFile:
+        writer = csv.writer(toFile)
+        for vector in diff.functionU:
+            if isinstance(vector, float):
+                vector = [vector]
+            writer.writerow(vector)
+    with open(exact, "w") as toFile:
+        writer = csv.writer(toFile)
+        for vector in u.solutions:
+            if isinstance(vector, float):
+                vector = [vector]
+            writer.writerow(vector)
+##end ExportCSV()
 
 
 
@@ -378,9 +405,13 @@ btnZoomOut = tk.Button(ioPlot, text="Zoom Out", command=lambda: ZoomOut(None))
         #############################  EVALUTATION TABLE  ###############################
 
 #lstSolutions = tk.Listbox(ioList)
-scrSolutionList = scroll.ScrollFrame(ioList)
+btnToCSV = tk.Button(ioList, text="Export to CSV file", command=lambda: ExportCSV(None), state="disabled")
+frmUpper = tk.Frame(ioList)
+frmLower = tk.Frame(ioList)
+scrSolutionList = scroll.ScrollFrame(frmUpper)
+scrExactList = scroll.ScrollFrame(frmLower)
 lstIVPSolutions = table.Table(scrSolutionList.frmContent, rows=[[0, 0]], title="IVP Solution")
-lstExactSolutions = table.Table(scrSolutionList.frmContent, rows=[[1, 1]], title="Exact Solution")
+lstExactSolutions = table.Table(scrExactList.frmContent, rows=[[1, 1]], title="Exact Solution")
 
 
 
@@ -434,8 +465,12 @@ pltVectorField.grid(row=0, column=0, columnspan=2, padx=10, pady=10)
 #btnZoomOut.grid(row=1, column=1, padx=10, pady=25)
 
     ## solutions table
+btnToCSV.pack(fill="both")
+frmUpper.pack(fill="both", expand=True)
+frmLower.pack(fill="both", expand=True)
 scrSolutionList.pack(fill="both", expand=True)
 lstIVPSolutions.pack(fill="both", expand=True)
+scrExactList.pack(fill="both", expand=True)
 lstExactSolutions.pack(fill="both", expand=True)
 
 
