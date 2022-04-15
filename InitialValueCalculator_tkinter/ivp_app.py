@@ -1,15 +1,11 @@
-# -*- coding: utf-8 -*-
 """
-Created on Sat Mar 19 09:36:14 2022
-
-@author: Christopher S. Francis
-
-@language: Python 3.10.2
-
-@summary: This file is the Graphcial User Interface (GUI) for an Initial Value Problem calculator using Euler's Method to solve
-
-@note: the lines that relate to the project are lines [161 - 226]** CHANGE THIS AT SUBMISSION: SolveIVP method, the bulk of the problem at hand is in the file ivp.py located in the lib folder.
+NOTE: the lines that relate to the project are lines [161 - 226]** CHANGE THIS AT SUBMISSION: SolveIVP method, the bulk of the problem at hand is in the file ivp.py located in the lib folder.
 """
+
+##
+# @mainpage <h1>Initial Value Calculator</h1><h3>1.0.1</h3> 
+# <p>The application designed to estimate the solutions for time dependent differential equations using Euler’s Method was developed using the Python programming language with no libraries external to the default version of the language. Default libraries means that the Input/Output is handled in a tkinter Graphical User Interface (GUI), and by far the majority of the code written is for the GUI and not directly solving the time dependent differential equation for a given initial value.</p> <p>Differentials of one or two dimensions (in excess of time) can be input along with a time interval to apply the estimation method and a number of steps to take. When available an exact solution to the differential can also be input for comparative purposes. The results are displayed graphically and in table format, with the option to export the tables to a CSV file for compatibility with other software.</p>
+# @author Christopher S. Francis
 
 ## Part of python language
 import tkinter as tk
@@ -142,6 +138,15 @@ def ShowAbout(event):
     infoAbout.pack(fill="both", expand=True)
 ##end ShowAbout()
 
+def ShowError(event, errorString):
+    dlgError = tk.Toplevel(gui)
+    dlgError.geometry("432x345")
+    dlgError.title("About Initial Value Calculator")
+    aboutString = ""
+    infoError = info.InfoDialog(dlgError, info=errorString)
+    infoError.pack(fill="both", expand=True)
+##end ShowError()
+
 
 ##
 # Method to update the "general" portion of the status bar.
@@ -165,6 +170,18 @@ def UpdateMidStatus(midStatus):
 def UpdateRightStatus(rightStatus):
     lblRightStatus["text"] = rightStatus
 ##end UpdateStatusLeft()
+
+
+
+
+
+
+
+
+
+# =============================================================================
+#  THIS PART RELATES DIRECTLY TO THE ASSIGNMENT
+# =============================================================================
 
 
 def ClearPlots(event):
@@ -251,18 +268,37 @@ def SolveIVP(event):
     if len(txtDeltaT.get()) != 0:
         diff.setDeltaT(txtDeltaT.get())
         u.setDeltaT(txtDeltaT.get())
+    else:
+        diff.setDeltaT("0.1")
+        u.setDeltaT("0.1")
+        
     if len(txtNumberOfSteps.get()) != 0:
         diff.setSteps(txtNumberOfSteps.get())
         u.setSteps(txtNumberOfSteps.get())
+    else:
+        diff.setSteps("5")
+        u.setSteps("5")
+        
     if len(txtUInitial.get()) != 0:
         diff.setInitialU(txtUInitial.get())
         u.setInitialValue(txtUInitial.get())
+    else:
+        diff.setInitialU("0")
+        u.setInitialValue("0")
+        
     if len(txtUFunction.get()) != 0:
         u.evaluateFunction(txtUFunction.get())
+    else:
+        ## the exact solution is optional
+        pass
+        
     if len(txtDifferential.get()) != 0:
         ##diff.setSolutionFunctions(txtUFunction.get()) ##I don't think I'm supposed to plug this in for Euler's, that's the improved RK method
         diff.solve(txtDifferential.get())
         diff.minMax()
+    else:
+        diff.solve("u + t") ## defaults to a linear solution
+        ShowError(None, "A time dependent differential must be entered, to prevent a total crash the software will work with the function f(t, u(t)) = u")
         
     pltVectorField.setScale(diff.xRange, diff.yRange)
     PlotSolution(None)
@@ -283,6 +319,21 @@ def SolveIVP(event):
     btnToCSV["state"] = "normal"
     
 ##end SolveIVP()
+
+
+
+
+
+# =============================================================================
+#  THE STUFF ABOVE THIS PART RELATES DIRECTLY TO THE ASSIGNMENT
+# =============================================================================
+
+
+
+
+
+
+
 
 
 def ExportCSV(event):

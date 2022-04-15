@@ -69,18 +69,22 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a93791be4025c7ee95ac610fa8b4b06cc"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classivp_1_1_euler_method.html#a93791be4025c7ee95ac610fa8b4b06cc">setInitialU</a> (self, u0)</td></tr>
 <tr class="memdesc:a93791be4025c7ee95ac610fa8b4b06cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method to set the intial value for the IVP problem.  <a href="classivp_1_1_euler_method.html#a93791be4025c7ee95ac610fa8b4b06cc">More...</a><br /></td></tr>
 <tr class="separator:a93791be4025c7ee95ac610fa8b4b06cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1d2833fc60044818e187befb13f1029"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classivp_1_1_euler_method.html#ae1d2833fc60044818e187befb13f1029">setSolutionFunctions</a> (self, <a class="el" href="classivp_1_1_euler_method.html#af59f53607123460f7b580802dfc353eb">u</a>)</td></tr>
+<tr class="memdesc:ae1d2833fc60044818e187befb13f1029"><td class="mdescLeft">&#160;</td><td class="mdescRight">(I don't think this is part of Euler's method) determines solution to the differential to use in the calculation, if entered directly it uses that, solving a number of cases may be attempted but time requirements for class project may prevent that  <a href="classivp_1_1_euler_method.html#ae1d2833fc60044818e187befb13f1029">More...</a><br /></td></tr>
+<tr class="separator:ae1d2833fc60044818e187befb13f1029"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd150034f5aa2f78feb02e2b741329b5"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classivp_1_1_euler_method.html#acd150034f5aa2f78feb02e2b741329b5">solve</a> (self, <a class="el" href="classivp_1_1_euler_method.html#aa050c6d1e1f00d241c2bee4eac47d0c6">differential</a>)</td></tr>
 <tr class="memdesc:acd150034f5aa2f78feb02e2b741329b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method that actually steps through the function starting with the initial values provided and finds the next estimated point by using Euler's Method.  <a href="classivp_1_1_euler_method.html#acd150034f5aa2f78feb02e2b741329b5">More...</a><br /></td></tr>
 <tr class="separator:acd150034f5aa2f78feb02e2b741329b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d02ad68aa6e5be5e9e71a13a57d3051"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classivp_1_1_euler_method.html#a2d02ad68aa6e5be5e9e71a13a57d3051">evaluate</a> (self, t)</td></tr>
-<tr class="memdesc:a2d02ad68aa6e5be5e9e71a13a57d3051"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal method to find each particular solution in the set.  <a href="classivp_1_1_euler_method.html#a2d02ad68aa6e5be5e9e71a13a57d3051">More...</a><br /></td></tr>
-<tr class="separator:a2d02ad68aa6e5be5e9e71a13a57d3051"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93f9512951c8d10ea90ea2bd541dbb5e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classivp_1_1_euler_method.html#a93f9512951c8d10ea90ea2bd541dbb5e">minMax</a> (self)</td></tr>
+<tr class="memdesc:a93f9512951c8d10ea90ea2bd541dbb5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method to find the minimum/maximum values for x and y corrdinates to set scale on the plot area.  <a href="classivp_1_1_euler_method.html#a93f9512951c8d10ea90ea2bd541dbb5e">More...</a><br /></td></tr>
+<tr class="separator:a93f9512951c8d10ea90ea2bd541dbb5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a838e0731098e6379470db9821df92968"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classivp_1_1_euler_method.html#a838e0731098e6379470db9821df92968">__str__</a> (self)</td></tr>
 <tr class="separator:a838e0731098e6379470db9821df92968"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:aa050c6d1e1f00d241c2bee4eac47d0c6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classivp_1_1_euler_method.html#aa050c6d1e1f00d241c2bee4eac47d0c6">differential</a></td></tr>
+<tr class="memdesc:aa050c6d1e1f00d241c2bee4eac47d0c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">UPDATE: for dimension in self.funtion[currentStep-1]: #calculate each dimension, append to step-list, then append step-list to full list afterwards ##this would work for simple 2d case of u and t as well.  <a href="classivp_1_1_euler_method.html#aa050c6d1e1f00d241c2bee4eac47d0c6">More...</a><br /></td></tr>
 <tr class="separator:aa050c6d1e1f00d241c2bee4eac47d0c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ad10f2bfad3afb25e1588e5e7ceb18f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classivp_1_1_euler_method.html#a1ad10f2bfad3afb25e1588e5e7ceb18f">deltaT</a></td></tr>
 <tr class="separator:a1ad10f2bfad3afb25e1588e5e7ceb18f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -88,6 +92,13 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a85bb2bf5b96facb3c55399954419a856"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50fe87eeca024958d4085380c2a06353"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classivp_1_1_euler_method.html#a50fe87eeca024958d4085380c2a06353">functionU</a></td></tr>
 <tr class="separator:a50fe87eeca024958d4085380c2a06353"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af59f53607123460f7b580802dfc353eb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classivp_1_1_euler_method.html#af59f53607123460f7b580802dfc353eb">u</a></td></tr>
+<tr class="memdesc:af59f53607123460f7b580802dfc353eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">discrete set, put this in if time allows  <a href="classivp_1_1_euler_method.html#af59f53607123460f7b580802dfc353eb">More...</a><br /></td></tr>
+<tr class="separator:af59f53607123460f7b580802dfc353eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adab81931339e009598a528a8c8e37ae3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classivp_1_1_euler_method.html#adab81931339e009598a528a8c8e37ae3">xRange</a></td></tr>
+<tr class="separator:adab81931339e009598a528a8c8e37ae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6862c1ad45366890a64e10483c44cead"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classivp_1_1_euler_method.html#a6862c1ad45366890a64e10483c44cead">yRange</a></td></tr>
+<tr class="separator:a6862c1ad45366890a64e10483c44cead"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Object to handle the solution to the time dependent differential with Euler's Method. </p>
@@ -131,33 +142,23 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a2d02ad68aa6e5be5e9e71a13a57d3051" name="a2d02ad68aa6e5be5e9e71a13a57d3051"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2d02ad68aa6e5be5e9e71a13a57d3051">&#9670;&nbsp;</a></span>evaluate()</h2>
+<a id="a93f9512951c8d10ea90ea2bd541dbb5e" name="a93f9512951c8d10ea90ea2bd541dbb5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93f9512951c8d10ea90ea2bd541dbb5e">&#9670;&nbsp;</a></span>minMax()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def ivp.EulerMethod.evaluate </td>
+          <td class="memname">def ivp.EulerMethod.minMax </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>self</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>t</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Internal method to find each particular solution in the set. </p>
+<p>Method to find the minimum/maximum values for x and y corrdinates to set scale on the plot area. </p>
 
 </div>
 </div>
@@ -227,6 +228,42 @@ Public Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">u0</td><td>-string from the input field representing the initial value(s). Use an ampersand (&amp;) to delimit the dimensions in the initial vector. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae1d2833fc60044818e187befb13f1029" name="ae1d2833fc60044818e187befb13f1029"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1d2833fc60044818e187befb13f1029">&#9670;&nbsp;</a></span>setSolutionFunctions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def ivp.EulerMethod.setSolutionFunctions </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>u</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>(I don't think this is part of Euler's method) determines solution to the differential to use in the calculation, if entered directly it uses that, solving a number of cases may be attempted but time requirements for class project may prevent that </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">u</td><td>-string representing the solution or set of solutions to the differential equation </td></tr>
   </table>
   </dd>
 </dl>
@@ -332,6 +369,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>UPDATE: for dimension in self.funtion[currentStep-1]: #calculate each dimension, append to step-list, then append step-list to full list afterwards ##this would work for simple 2d case of u and t as well. </p>
+
 </div>
 </div>
 <a id="a50fe87eeca024958d4085380c2a06353" name="a50fe87eeca024958d4085380c2a06353"></a>
@@ -356,6 +395,50 @@ Public Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">ivp.EulerMethod.steps</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af59f53607123460f7b580802dfc353eb" name="af59f53607123460f7b580802dfc353eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af59f53607123460f7b580802dfc353eb">&#9670;&nbsp;</a></span>u</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ivp.EulerMethod.u</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>discrete set, put this in if time allows </p>
+
+</div>
+</div>
+<a id="adab81931339e009598a528a8c8e37ae3" name="adab81931339e009598a528a8c8e37ae3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adab81931339e009598a528a8c8e37ae3">&#9670;&nbsp;</a></span>xRange</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ivp.EulerMethod.xRange</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6862c1ad45366890a64e10483c44cead" name="a6862c1ad45366890a64e10483c44cead"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6862c1ad45366890a64e10483c44cead">&#9670;&nbsp;</a></span>yRange</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ivp.EulerMethod.yRange</td>
         </tr>
       </table>
 </div><div class="memdoc">

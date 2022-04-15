@@ -10,7 +10,8 @@ Created on Sun Apr 10 08:41:12 2022
 import tkinter as tk
 import tkinter.ttk as ttk
 
-
+##
+# Object to provide a scrollable frame for the tabular output of the estimates for differential and exact solution to go
 class ScrollFrame(tk.Frame):
     
     ##

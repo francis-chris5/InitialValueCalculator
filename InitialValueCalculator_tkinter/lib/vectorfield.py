@@ -64,9 +64,9 @@ class VectorField(tk.Canvas):
     # @param d -ending y coordinate
     def create_arrow(self, a=0, b=0, c=1, d=1):
         a = a * self.xScale + self.wide
-        b = b * self.yScale + self.tall
+        b = float(self["height"]) - (b * self.yScale + self.tall) ## tkinter canvas widget has y increase downward
         c = c * self.xScale + self.wide
-        d = d * self.yScale + self.tall
+        d = float(self["height"]) - (d * self.yScale + self.tall) ## tkinter canvas widget has y increase downward
         x = (c - a)
         y = (d - b)
         magnitude = math.sqrt(x**2 + y **2)
@@ -83,9 +83,9 @@ class VectorField(tk.Canvas):
     # @param d -ending y coordinate
     def create_curve(self, a=0, b=0, c=1, d=1):
         a = a * self.xScale + self.wide
-        b = b * self.yScale + self.tall
+        b = float(self["height"]) - (b * self.yScale + self.tall) ## tkinter canvas widget has y increase downward
         c = c * self.xScale + self.wide
-        d = d * self.yScale + self.tall
+        d = float(self["height"]) - (d * self.yScale + self.tall) ## tkinter canvas widget has y increase downward
         self.create_line(a, b, c, d, width=2, fill="red")
         
 
