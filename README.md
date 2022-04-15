@@ -1,6 +1,6 @@
 # InitialValueCalculator
 
-<h1 style="text-align: center">Project #1 Synopsis</h1>
+<h2 style="text-align: center">Project Synopsis</h2>
 <p>The application designed to estimate the solutions for time dependent differential equations using Euler’s Method was developed using the Python programming language with no libraries external to the default version of the language. Default libraries means that the Input/Output is handled in a tkinter Graphical User Interface (GUI), and by far the majority of the code written is for the GUI and not directly solving the time dependent differential equation for a given initial value.</p>
 <p>Differentials of one or two dimensions (in excess of time) can be input along with a time interval to apply the estimation method and a number of steps to take. When available an exact solution to the differential can also be input for comparative purposes. The results are displayed graphically and in table format, with the option to export the tables to a CSV file for compatibility with other software.</p>
 <p>The package containing all relevant files includes a version of a Lorenz Attractor and a random example from an undergrad differential equations textbook for proof of concept samples.</p>
