@@ -26,7 +26,7 @@
 <p>The middle and right-hand side of the GUI contains output areas. (1) The iterated estimates from using Euler’s Method are plotted in black arrows, and the exact solution is plotted with a red line –the red line is narrower and will appear above the black arrows–, (2) a table listing out the time and value for each dimension at that time from the Euler’s Method estimate is found at the top left, with (3) a table listing out the exact solution for the same time intervals below it when the exact solutions are known, along with an option to (4) export the tables for the estimated and exact values to a CSV file for use with other software when needed.</p>
 
 
-<img src="https://user-images.githubusercontent.com/50467171/163652684-08e6dedf-f400-47d5-a62a-f37b1a8130c7.png"
+<img src="https://user-images.githubusercontent.com/50467171/163652684-08e6dedf-f400-47d5-a62a-f37b1a8130c7.png"/>
 
 
 <h3>Software</h3>
