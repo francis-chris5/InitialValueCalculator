@@ -1,6 +1,6 @@
 # InitialValueCalculator
 
-<h2 style="text-align: center">Project Synopsis</h2>
+<h2>Project Synopsis</h2>
 <p>The application designed to estimate the solutions for time dependent differential equations using Euler’s Method was developed using the Python programming language with no libraries external to the default version of the language. Default libraries means that the Input/Output is handled in a tkinter Graphical User Interface (GUI), and by far the majority of the code written is for the GUI and not directly solving the time dependent differential equation for a given initial value.</p>
 <p>Differentials of one or two dimensions (in excess of time) can be input along with a time interval to apply the estimation method and a number of steps to take. When available an exact solution to the differential can also be input for comparative purposes. The results are displayed graphically and in table format, with the option to export the tables to a CSV file for compatibility with other software.</p>
 <p>The package containing all relevant files includes a version of a Lorenz Attractor and a random example from an undergrad differential equations textbook for proof of concept samples.</p>
@@ -9,7 +9,8 @@
 <h3>Input Fields</h3>
 <p>On the left hand side of the GUI are input fields for the (1)time dependent differential, (2)the initial values, (3)the step size to take, and the (4)number of steps to take, along with an optional field to input the (5)exact solution to the differential.</p>
 
-<!-- image 1 goes here -->
+<img src="https://user-images.githubusercontent.com/50467171/163650178-01afd995-7139-4f9a-a1f5-295df9b1bfad.png"/>
+
 
 <ol>
   <li>If the differential is composed of a function in a single dimension, with time as the only independent variable the function is input directly in python notation. Python’s “math” module is available for use when necessary, e.g. math.sqrt(x) or math.cos(x). If the differential is made up of multiple functions, vector input, then separate the functions with an ampersand (&).</li>
@@ -25,7 +26,7 @@
 <p>The middle and right-hand side of the GUI contains output areas. (1) The iterated estimates from using Euler’s Method are plotted in black arrows, and the exact solution is plotted with a red line –the red line is narrower and will appear above the black arrows–, (2) a table listing out the time and value for each dimension at that time from the Euler’s Method estimate is found at the top left, with (3) a table listing out the exact solution for the same time intervals below it when the exact solutions are known, along with an option to (4) export the tables for the estimated and exact values to a CSV file for use with other software when needed.</p>
 
 
-<!-- image 2 goes here -->
+<img src="https://user-images.githubusercontent.com/50467171/163650184-e5dd39e4-8ce2-4352-b73d-2f566eab5244.png"
 
 
 <h3>Software</h3>
